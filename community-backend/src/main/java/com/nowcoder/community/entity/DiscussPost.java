@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class DiscussPost {
     private int id;
-    private String user_id;
+    private int userId;
     private String title;
     private String content;
     private int type;
     private int status;
-    private Date create_time;
-    private int comment_count;
+    private Date createTime;
+    private int commentCount;
     private double score;
 
     public int getId() {
@@ -21,12 +21,12 @@ public class DiscussPost {
         this.id = id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -61,20 +61,20 @@ public class DiscussPost {
         this.status = status;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public int getComment_count() {
-        return comment_count;
+    public int getCommentCount() {
+        return commentCount;
     }
 
-    public void setComment_count(int comment_count) {
-        this.comment_count = comment_count;
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 
     public double getScore() {
@@ -85,20 +85,26 @@ public class DiscussPost {
         this.score = score;
     }
 
+
+
     @Override
     public String toString() {
         return "DiscussPost{" +
                 "id=" + id +
-                ", user_id='" + user_id + '\'' +
+                ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", type=" + type +
                 ", status=" + status +
-                ", create_time=" + create_time +
-                ", comment_count=" + comment_count +
+                ", createTime=" + createTime +
+                ", commentCount=" + commentCount +
                 ", score=" + score +
                 '}';
     }
+
+
+
+
 
 
 }
