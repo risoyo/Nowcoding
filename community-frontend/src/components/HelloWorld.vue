@@ -1,60 +1,34 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,
-      <br />check out the
-      <a
-        href="https://cli.vuejs.org"
-        target="_blank"
-        rel="noopener"
-      >vue-cli documentation</a>.
-    </p>
-    <h3>my data is {{ info }}</h3>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-        >babel</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-        >eslint</a>
-      </li>
-    </ul>
+    <h3>my data is</h3>
+    <div>
+      <!-- 使用v-for读取infos中的数据 -->
+      <p v-for="(info,i) in infos" :key="i">
+        {{info.content}}
+        {{info.user_name}}
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
-  props: {
-    msg: String
-  },
   data() {
     return {
-      info: []
+      // 声明使用的数组
+      infos: [],
     };
   },
-  // mounted(){
-  //   this.$axios.get("http://localhost:8080/community/alpha/daotest").then(response => (this.info = response))
-  // }
-  created() {
+  mounted() {
     this.$axios
-      .get("http://localhost:8080/community/alpha/emps")
-      .then(function (res) {
-        this.info = res.data;
-        console.log(res.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // 不添加http等前缀，前缀由vue.config.js来补充，实现请求转发
+      .get("/community/getIndexPost")
+      .then(resp => {
+                    if (resp) {
+                      // 将resp中的data数据存入infos
+                        this.infos = resp.data;
+                    }
+                });
   }
 };
 </script>
