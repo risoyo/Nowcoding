@@ -11,11 +11,15 @@ import java.util.List;
 public class DiscussPostService {
     @Autowired
     private DiscussPostMapper discussPostMapper;
-    public List<DiscussPost> findDiscussPosts(int userId,int offSet,int limit){
-        return discussPostMapper.selectDiscussPosts(userId,offSet,limit);
+
+    public List<DiscussPost> findDiscussPosts(int userId, int offSet, int limit) {
+        // userId:查询特定用户的帖子，为0时查询所有用户
+//        offset：查询起始位置
+//        limi：查询条数
+        return discussPostMapper.selectDiscussPosts(userId, offSet, limit);
     }
 
-    public int findDiscussPostRows(int userId){
+    public int findDiscussPostRows(int userId) {
         return discussPostMapper.selectDiscussPostRows(userId);
     }
 }

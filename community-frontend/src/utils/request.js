@@ -1,5 +1,6 @@
 import axios from "axios";
-import { MessageBox, Message } from "element-ui";
+// import { MessageBox, Message } from "element-ui";
+import Message from "element-ui";
 import router from "../router";
 
 // create an axios instance
@@ -21,7 +22,7 @@ service.interceptors.request.use(
     //      config.headers['X-Token'] = getToken()
     //    }
     config.headers["Content-Type"] = "application/json;charset=UTF-8";
-    const token = window.sessionStorage.getItem("_token");
+    // const token = window.sessionStorage.getItem("_token");
     config.headers["X-ER-UAT"] = "token";
     return config;
   },
