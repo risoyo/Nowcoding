@@ -3,9 +3,9 @@
     <h3>my data is</h3>
     <div>
       <!-- 使用v-for读取infos中的数据 -->
-      <p v-for="(info,i) in infos" :key="i">
-        {{info.content}}
-        {{info.user_name}}
+      <p v-for="(info, i) in infos" :key="i">
+        {{ info.content }}
+        {{ info.user_name }}
       </p>
     </div>
   </div>
@@ -18,7 +18,7 @@ export default {
       // 声明使用的数组
       infos: []
     };
-  },
+  }
   // mounted() {
   //   this.$axios
   //   // 不添加http等前缀，前缀由vue.config.js来补充，实现请求转发

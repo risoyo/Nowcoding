@@ -7,7 +7,7 @@ public class Page {
     //前端传来当前显示的页码
     private int currentPageNumber = 1;
     // 每页显示数据上限
-    private int maxCountPerPage = 10;
+    private int maxRowsPerPage = 10;
     // 数据总数
     private int rowsMaxCount;
     // 查询路径
@@ -23,13 +23,13 @@ public class Page {
         }
     }
 
-    public int getMaxCountPerPage() {
-        return maxCountPerPage;
+    public int getmaxRowsPerPage() {
+        return maxRowsPerPage;
     }
 
-    public void setMaxCountPerPage(int maxCountPerPage) {
-        if (maxCountPerPage >= 1 && maxCountPerPage <= 100) {
-            this.maxCountPerPage = maxCountPerPage;
+    public void setmaxRowsPerPage(int maxRowsPerPage) {
+        if (maxRowsPerPage >= 1 && maxRowsPerPage <= 100) {
+            this.maxRowsPerPage = maxRowsPerPage;
         }
 
     }
@@ -56,7 +56,7 @@ public class Page {
     public String toString() {
         return "Page{" +
                 "currentPageNumber=" + currentPageNumber +
-                ", maxCountPerPage=" + maxCountPerPage +
+                ", maxRowsPerPage=" + maxRowsPerPage +
                 ", rowsMaxCount=" + rowsMaxCount +
                 ", path='" + path + '\'' +
                 '}';
@@ -64,16 +64,16 @@ public class Page {
 
     // 数据库在查询数据时，需要的是offset-起始行，而不是页码，所以需要使用页码计算出起始行
     public int getOffSet() {
-        return currentPageNumber * maxCountPerPage - maxCountPerPage;
+        return currentPageNumber * maxRowsPerPage - maxRowsPerPage;
     }
 
     //获取总页数
     public int getTotalPageNumber() {
         //
-        if (rowsMaxCount % maxCountPerPage == 0) {
-            return rowsMaxCount / maxCountPerPage;
+        if (rowsMaxCount % maxRowsPerPage == 0) {
+            return rowsMaxCount / maxRowsPerPage;
         } else {
-            return rowsMaxCount / maxCountPerPage + 1;
+            return rowsMaxCount / maxRowsPerPage + 1;
         }
     }
 
