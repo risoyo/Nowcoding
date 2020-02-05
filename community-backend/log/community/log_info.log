@@ -1,0 +1,6 @@
+2020-02-05 21:56:44,644 INFO [main] c.n.c.LoggerTests [StartupInfoLogger.java:50] Starting LoggerTests on DESKTOP-RM6ATF8 with PID 21788 (started by yingl in D:\Project\nowcoder\Nowcoding\community-backend)
+2020-02-05 21:56:44,648 INFO [main] c.n.c.LoggerTests [SpringApplication.java:675] No active profile set, falling back to default profiles: default
+2020-02-05 21:56:48,914 INFO [main] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:171] Initializing ExecutorService 'applicationTaskExecutor'
+2020-02-05 21:56:49,777 INFO [main] c.n.c.LoggerTests [StartupInfoLogger.java:59] Started LoggerTests in 6.052 seconds (JVM running for 7.633)
+2020-02-05 21:56:50,079 INFO [main] c.n.c.LoggerTests [LoggerTests.java:26] info log
+2020-02-05 21:56:50,090 INFO [Thread-3] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:208] Shutting down ExecutorService 'applicationTaskExecutor'
