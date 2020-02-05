@@ -16,20 +16,20 @@ export default {
   data() {
     return {
       // 声明使用的数组
-      infos: []
+      infos: [],
     };
   },
-  // mounted() {
-  //   this.$axios
-  //   // 不添加http等前缀，前缀由vue.config.js来补充，实现请求转发
-  //     .get("/community/getIndexPost")
-  //     .then(resp => {
-  //                   if (resp) {
-  //                     // 将resp中的data数据存入infos
-  //                       this.infos = resp.data;
-  //                   }
-  //               });
-  // }
+  mounted() {
+    this.$axios
+    // 不添加http等前缀，前缀由vue.config.js来补充，实现请求转发
+      .get("/community/getIndexPost")
+      .then(resp => {
+                    if (resp) {
+                      // 将resp中的data数据存入infos
+                        this.infos = resp.data;
+                    }
+                });
+  }
 };
 </script>
 
