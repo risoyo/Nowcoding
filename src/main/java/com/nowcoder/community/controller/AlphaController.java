@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-import lombok.Data;
 
 @Controller
 @RequestMapping("/alpha")
@@ -48,7 +47,7 @@ public class AlphaController {
         // 返回响应数据
         response.setContentType("text/html;charset=utf-8");
         try (
-                PrintWriter writer = response.getWriter();
+                PrintWriter writer = response.getWriter()
         ) {
             writer.write("<h1>nowcode</h1>");
         } catch (IOException e) {
@@ -80,46 +79,23 @@ public class AlphaController {
     public String getSpecStudent(@PathVariable("id") int id) {
         int a = 123;
         int b = (1 + 2) + 3;
+        System.out.println(a);
         System.out.println(b);
         return "a student" + id;
     }
 
-
-    @Data
-    public static class FormData {
-
-        private String name;
-        private String password;
-        private String passwordConfirm;
-        private String email;
-    }
-
-    // POST请求
-//    @RequestMapping(path = "/student", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String saveStudent(Object name) {
-//        System.out.println(name);
-////        System.out.println(age);
-//        return "success";
-//    }
-//    @PostMapping("/student")
-//    @ResponseBody
-//    public String saveStudent(@RequestPart("formData") FormData formData) {
-//        System.out.println(formData);
-////        System.out.println(formData.name);
-////        System.out.println(formData.age);
-//        //copyFile方法见第一个单文件上传
-//        return "success";
-//    }
-
     @PostMapping("/student")
+//    @ResponseBody指定返回值格式为自定义
     @ResponseBody
+//    指定传入的值，@RequestBody来接收前台传来的json，HttpServletRequest传入一些参数
     public Map<String,Object> login(@RequestBody Map<String,Object> map, HttpServletRequest request){
+//        获取前台传入json的name节点的值
         String loginId = (String) map.get("name");
         String password = (String) map.get("password");
         System.out.println(loginId);
         System.out.println(password);
         System.out.println(request.getRequestURL());
+//        初始化值
         Map<String,Object> returnMap = new HashMap<>();
         returnMap.put("code",3028271);
         returnMap.put("verfy",3028271);
