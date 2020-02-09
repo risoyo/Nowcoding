@@ -1,27 +1,8 @@
 <template>
   <div class="hello">
-    <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
-      mode="horizontal"
-      @select="handleSelect"
-    >
-      <el-menu-item index="1">最新</el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">最热</template>
-        <el-menu-item index="2-1">最热1</el-menu-item>
-        <el-menu-item index="2-2">最热2</el-menu-item>
-        <el-menu-item index="2-3">最热3</el-menu-item>
-        <el-submenu index="2-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="2-4-1">选项1</el-menu-item>
-          <el-menu-item index="2-4-2">选项2</el-menu-item>
-          <el-menu-item index="2-4-3">选项3</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-      <el-menu-item index="3" disabled>消息中心</el-menu-item>
-    </el-menu>
-    <h3>当前页码 is {{totalPageNumber}}</h3>
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tab-pane label="最新" name="first">
+          <h3>当前页码 is {{totalPageNumber}}</h3>
 
     <!-- 使用v-for读取infos中的数据 -->
 
@@ -51,6 +32,14 @@
         :current-page="currentPageNumber"
       ></el-pagination>
     </div>
+    </el-tab-pane>
+
+    
+    <el-tab-pane label="最热" name="second">最热</el-tab-pane>
+  </el-tabs>
+
+
+
   </div>
 </template>
 
@@ -62,8 +51,7 @@ export default {
       currentPageNumber: 1,
       totalPageNumber: 0,
       maxRowsPerPage: 10,
-      activeIndex: "1",
-      activeIndex2: "1",
+      activeName: 'first',
       infos: []
     };
   },
@@ -92,9 +80,9 @@ export default {
           }
         });
     },
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
+    handleClick(tab, event) {
+        console.log(tab, event);
+      },
     handleCurrentChange(val) {
       this.currentPageNumber = val;
       console.log(`当前页: ${val}`);

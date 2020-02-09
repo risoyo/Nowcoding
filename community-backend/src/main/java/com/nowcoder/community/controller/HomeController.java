@@ -34,12 +34,12 @@ public class HomeController {
         int offSet = 0;//前台页面显示的起始行
 
         Page page = new Page();
-        page.setCurrentPageNumber(currentPageNumber);
-        page.setRowsMaxCount(discussPostService.findDiscussPostRows(0));
-        page.setmaxRowsPerPage(maxRowsPerPage);
+        page.setCurrentPageNumber(currentPageNumber);//将前台url传入的currentPageNumber传入page
+        page.setRowsMaxCount(discussPostService.findDiscussPostRows(0));//调用discussPostService的方法查出共有多少条数据
+        page.setmaxRowsPerPage(maxRowsPerPage);//将前台URL传入的maxRowsPerPage传入page
         page.setPath("/getIndexPost");
-        totalPageNumber = page.getTotalPageNumber();
-        offSet = page.getOffSet();
+        totalPageNumber = page.getTotalPageNumber();//从page获取总页数
+        offSet = page.getOffSet();//从page获取此页开始行数
 
 
         List<Map<String, Object>> indexPostList = new ArrayList<>();//返回的列表集合
