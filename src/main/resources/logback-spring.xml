@@ -3,7 +3,7 @@
 <!--    项目名字-->
     <contextName>community</contextName>
     <!--    LOG_PATH:日志文件存放的目录  -->
-    <property name="LOG_PATH" value="D:/Project/nowcoder/Nowcoding/community-backend/log/"/>
+    <property name="LOG_PATH" value="D:/Project/nowcoder/Nowcoding/log/"/>
     <!--    APPDIR ： APP的目录，就是上一个LOG_PATH中对应该项目的子目录-->
     <property name="APPDIR" value="community"/>
 
