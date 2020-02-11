@@ -35,6 +35,11 @@ public class RegisterController {
         int generateStatus = 0;//定义变量generateStatus，0-成功生成，1-生成失败
         Map<String,Object> returnMap = new HashMap<>();//声明返回结构体
         String email = (String)emailJson.get("email");
+        if(email.length()==0){
+            returnMap.put("status",1);
+            returnMap.put("reason","Email地址为空，请输入Email");
+            return returnMap;
+        }
         generateStatus = registerService.generateVerifyCode(email);
         if(generateStatus == 0){//成功生成验证码，进行发送操作
             int sendStatus = 0;//定义变量sendStatus，0-成功发送，1-发送失败
