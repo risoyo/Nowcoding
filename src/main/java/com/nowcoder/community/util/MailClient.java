@@ -24,7 +24,7 @@ public class MailClient {
     private String from;
 
 //    传入三个变量，收件人、标题、内容
-    public void sendMail(String to, String subject, String content) {
+    public int sendMail(String to, String subject, String content) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -33,8 +33,10 @@ public class MailClient {
             helper.setSubject(subject);
             helper.setText(content, true);
             mailSender.send(helper.getMimeMessage());
+            return 0;
         } catch (MessagingException e) {
             logger.error("发送邮件失败:" + e.getMessage());
+            return 1;
         }
     }
 
