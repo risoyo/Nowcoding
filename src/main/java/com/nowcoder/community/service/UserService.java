@@ -5,16 +5,38 @@ import com.nowcoder.community.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class UserService {
     private final UserMapper userMapper;
+    private final ReturnService returnService;
 
     @Autowired
-    public UserService(UserMapper userMapper) {
+    public UserService(UserMapper userMapper, ReturnService returnService) {
         this.userMapper = userMapper;
+        this.returnService = returnService;
     }
 
     public User findUserById(int userId) {
         return userMapper.selectById(userId);
+    }
+
+    public User findUserByName(String userName) {
+        return userMapper.selectByName(userName);
+    }
+
+    public int insertUser(String userName, String password, String email) {
+        User userToInsert = new User();
+        if (userMapper.selectByName(userName) == null) {
+            returnService.returnMessage(1, "用户名已存在");
+        }
+        userToInsert.setUsername(userName);
+        userToInsert.setPassword(password);
+        userToInsert.setSalt("abc");
+        userToInsert.setEmail(email);
+        userToInsert.setHeaderUrl("http://11.com");
+        userToInsert.setCreateTime(new Date());
+        return userMapper.insertUser(userToInsert);
     }
 }
