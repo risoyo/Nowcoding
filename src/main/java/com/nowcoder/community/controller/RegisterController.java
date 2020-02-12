@@ -29,4 +29,5 @@ public class RegisterController {
         String email = (String) emailJson.get("email");
         return registerService.generateVerifyCodeAndSend(email);
     }
+
 }

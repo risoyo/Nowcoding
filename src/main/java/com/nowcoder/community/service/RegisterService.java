@@ -14,11 +14,13 @@ import java.util.Map;
 public class RegisterService {
     private final TbRegisterMessageMapper tbRegisterMessageMapper;
     private final MailClient mailClient;
+    private final ReturnService returnService;
 
     @Autowired
-    private RegisterService(TbRegisterMessageMapper tbRegisterMessageMapper, MailClient mailClient) {
+    private RegisterService(TbRegisterMessageMapper tbRegisterMessageMapper, MailClient mailClient, ReturnService returnService) {
         this.tbRegisterMessageMapper = tbRegisterMessageMapper;
         this.mailClient = mailClient;
+        this.returnService = returnService;
     }
 
     //    生成验证码并存入数据库
@@ -68,4 +70,16 @@ public class RegisterService {
         }//生成验证码失败，请重试
         return returnMap;
     }
+
+    public void userRegister(String userName, String password, String email, int verifyCode) {
+        TbRegisterMessage tbRegisterMessage = getVerifyCode(email);
+        int generateStatus;//定义变量generateStatus，0-成功生成，1-生成失败
+        Map<String, Object> returnMap = new HashMap<>();//声明返回结构体
+        if (verifyCode == tbRegisterMessage.getVerifyCode()) {//验证码正确
+            //调用insert用户的service
+        } else {
+            returnService.returnMessage(1, "验证码错误");
+        }
+    }
+
 }
