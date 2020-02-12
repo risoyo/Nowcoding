@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -16,12 +15,16 @@ public class RegisterService implements CommunityConstant {
     private final TbRegisterMessageMapper tbRegisterMessageMapper;
     private final MailClient mailClient;
     private final ReturnService returnService;
+    private final UserService userService;
+    private Map<String, Object> returnMap;//定义变量returnMap，用于接收返回结构体
+
 
     @Autowired
-    private RegisterService(TbRegisterMessageMapper tbRegisterMessageMapper, MailClient mailClient, ReturnService returnService) {
+    private RegisterService(TbRegisterMessageMapper tbRegisterMessageMapper, MailClient mailClient, ReturnService returnService, UserService userService) {
         this.tbRegisterMessageMapper = tbRegisterMessageMapper;
         this.mailClient = mailClient;
         this.returnService = returnService;
+        this.userService = userService;
     }
 
     //    生成验证码并存入数据库
@@ -50,7 +53,6 @@ public class RegisterService implements CommunityConstant {
 
     public Map<String, Object> generateVerifyCodeAndSend(String email) {
         int generateStatus;//定义变量generateStatus，0-成功生成，1-生成失败
-        Map<String, Object> returnMap;//定义变量returnMap，用于接收返回结构体
         generateStatus = generateVerifyCode(email);
         if (generateStatus == 0) {//成功生成验证码，进行发送操作
             int sendStatus;//定义变量sendStatus，0-成功发送，1-发送失败
@@ -69,15 +71,22 @@ public class RegisterService implements CommunityConstant {
         return returnMap;
     }
 
-    public void userRegister(String userName, String password, String email, int verifyCode) {
+    public Map<String, Object> userRegister(String userName, String password, String email, int verifyCode) {
         TbRegisterMessage tbRegisterMessage = getVerifyCode(email);
+        int status;//定义status，接收insertUser()返回的影响行数
         int generateStatus;//定义变量generateStatus，0-成功生成，1-生成失败
-        Map<String, Object> returnMap = new HashMap<>();//声明返回结构体
         if (verifyCode == tbRegisterMessage.getVerifyCode()) {//验证码正确
             //调用insert用户的service
+            status = userService.insertUser(userName, password, email);
+            if (status == 1) {//若status为1，则用户注册成功
+                returnMap = returnService.returnMessage(SUCCESS);
+            } else {//status非1，则注册失败
+                returnMap = returnService.returnMessage(REGISTER_FAIL);
+            }
         } else {
-//            returnService.returnMessage(1, "验证码错误");
+            returnMap = returnService.returnMessage(VERIFY_CODE_ERROR);
         }
+        return returnMap;
     }
 
 }

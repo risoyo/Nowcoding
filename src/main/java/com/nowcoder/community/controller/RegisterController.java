@@ -16,7 +16,7 @@ import java.util.Map;
 public class RegisterController {
     private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
-    private final RegisterService registerService;//验证码相关Service
+    private final RegisterService registerService;//注册相关Service
 
     @Autowired
     public RegisterController(RegisterService registerService) {
@@ -29,6 +29,18 @@ public class RegisterController {
         Map<String, Object> returnMap;//定义变量returnMap，用于接收返回结构体
         String email = (String) emailJson.get("email");
         returnMap = registerService.generateVerifyCodeAndSend(email);
+        return returnMap;
+    }
+
+    @RequestMapping(path = "/userRegist")
+    @ResponseBody
+    public Map<String, Object> registUser(@RequestBody Map<String, Object> userInfo, HttpServletRequest request) {
+        Map<String, Object> returnMap;//定义变量returnMap，用于接收返回结构体
+        String userName = (String) userInfo.get("name");
+        String password = (String) userInfo.get("pass");
+        String email = (String) userInfo.get("email");
+        int verifyCode = Integer.parseInt((String) userInfo.get("verifyCode"));
+        returnMap = registerService.userRegister(userName, password, email, verifyCode);
         return returnMap;
     }
 
