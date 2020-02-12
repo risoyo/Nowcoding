@@ -45,3 +45,18 @@
 2020-02-12 15:48:24,443 WARN [main] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [ThymeleafAutoConfiguration.java:108] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
 2020-02-12 15:48:25,467 WARN [main] c.z.h.HikariConfig [HikariConfig.java:968] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
 2020-02-12 15:48:25,470 WARN [main] c.z.h.HikariConfig [HikariConfig.java:1008] {} - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2020-02-12 21:24:39,733 WARN [main] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [ThymeleafAutoConfiguration.java:108] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2020-02-12 21:24:40,494 WARN [main] c.z.h.HikariConfig [HikariConfig.java:968] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2020-02-12 21:24:40,497 WARN [main] c.z.h.HikariConfig [HikariConfig.java:1008] {} - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2020-02-12 21:48:36,782 WARN [main] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [ThymeleafAutoConfiguration.java:108] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2020-02-12 21:48:37,524 WARN [main] c.z.h.HikariConfig [HikariConfig.java:968] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2020-02-12 21:48:37,526 WARN [main] c.z.h.HikariConfig [HikariConfig.java:1008] {} - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2020-02-12 21:49:40,045 WARN [main] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [ThymeleafAutoConfiguration.java:108] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2020-02-12 21:49:40,903 WARN [main] c.z.h.HikariConfig [HikariConfig.java:968] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2020-02-12 21:49:40,906 WARN [main] c.z.h.HikariConfig [HikariConfig.java:1008] {} - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2020-02-12 21:49:52,549 WARN [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [ThymeleafAutoConfiguration.java:108] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2020-02-12 21:50:05,970 WARN [http-nio-8081-exec-1] c.z.h.HikariConfig [HikariConfig.java:968] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2020-02-12 21:50:05,972 WARN [http-nio-8081-exec-1] c.z.h.HikariConfig [HikariConfig.java:1008] {} - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2020-02-12 21:55:26,432 WARN [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [ThymeleafAutoConfiguration.java:108] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2020-02-12 21:55:32,046 WARN [http-nio-8081-exec-1] c.z.h.HikariConfig [HikariConfig.java:968] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2020-02-12 21:55:32,047 WARN [http-nio-8081-exec-1] c.z.h.HikariConfig [HikariConfig.java:1008] {} - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.

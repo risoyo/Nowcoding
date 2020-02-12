@@ -2,6 +2,7 @@ package com.nowcoder.community.service;
 
 import com.nowcoder.community.dao.TbRegisterMessageMapper;
 import com.nowcoder.community.entity.TbRegisterMessage;
+import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.MailClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class RegisterService {
+public class RegisterService implements CommunityConstant {
     private final TbRegisterMessageMapper tbRegisterMessageMapper;
     private final MailClient mailClient;
     private final ReturnService returnService;
@@ -49,25 +50,22 @@ public class RegisterService {
 
     public Map<String, Object> generateVerifyCodeAndSend(String email) {
         int generateStatus;//定义变量generateStatus，0-成功生成，1-生成失败
-        Map<String, Object> returnMap = new HashMap<>();//声明返回结构体
+        Map<String, Object> returnMap;//定义变量returnMap，用于接收返回结构体
         generateStatus = generateVerifyCode(email);
         if (generateStatus == 0) {//成功生成验证码，进行发送操作
             int sendStatus;//定义变量sendStatus，0-成功发送，1-发送失败
             TbRegisterMessage tbRegisterMessage = getVerifyCode(email);
             String verifyMessage = tbRegisterMessage.getVerifyMessage();
             sendStatus = mailClient.sendMail(email, verifyMessage, verifyMessage);
-            if (sendStatus == 0) {
-                returnMap.put("status", 0);
-                returnMap.put("reason", "验证码已发送");
+            if (sendStatus == 0) {//发送邮件成功
+                returnMap = returnService.returnMessage(SUCCESS);
             } else {
-                returnMap.put("status", 2);
-                returnMap.put("reason", "验证码发送失败，请重试");
+                returnMap = returnService.returnMessage(VERIFY_CODE_SEND_FAIL);
             }
 
-        } else {
-            returnMap.put("status", 1);
-            returnMap.put("reason", "生成验证码失败，请重试");
-        }//生成验证码失败，请重试
+        } else {//生成验证码失败，请重试
+            returnMap = returnService.returnMessage(VERIFY_CODE_GEN_FAIL);
+        }
         return returnMap;
     }
 
@@ -78,7 +76,7 @@ public class RegisterService {
         if (verifyCode == tbRegisterMessage.getVerifyCode()) {//验证码正确
             //调用insert用户的service
         } else {
-            returnService.returnMessage(1, "验证码错误");
+//            returnService.returnMessage(1, "验证码错误");
         }
     }
 

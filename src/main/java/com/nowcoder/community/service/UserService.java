@@ -2,13 +2,14 @@ package com.nowcoder.community.service;
 
 import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.util.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Service
-public class UserService {
+public class UserService implements CommunityConstant {
     private final UserMapper userMapper;
     private final ReturnService returnService;
 
@@ -29,7 +30,7 @@ public class UserService {
     public int insertUser(String userName, String password, String email) {
         User userToInsert = new User();
         if (userMapper.selectByName(userName) == null) {
-            returnService.returnMessage(1, "用户名已存在");
+            returnService.returnMessage(REGISTER_FAILURE_USERNAME_EXIST);
         }
         userToInsert.setUsername(userName);
         userToInsert.setPassword(password);

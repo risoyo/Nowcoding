@@ -26,8 +26,10 @@ public class RegisterController {
     @RequestMapping(path = "/getVerifyCode")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
     public Map<String, Object> generateVerifyCodeAndSend(@RequestBody Map<String, Object> emailJson, HttpServletRequest request) {
+        Map<String, Object> returnMap;//定义变量returnMap，用于接收返回结构体
         String email = (String) emailJson.get("email");
-        return registerService.generateVerifyCodeAndSend(email);
+        returnMap = registerService.generateVerifyCodeAndSend(email);
+        return returnMap;
     }
 
 }
