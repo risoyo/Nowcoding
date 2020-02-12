@@ -39,7 +39,7 @@ public class RegisterController {
         String userName = (String) userInfo.get("name");
         String password = (String) userInfo.get("pass");
         String email = (String) userInfo.get("email");
-        int verifyCode = Integer.parseInt((String) userInfo.get("verifyCode"));
+        int verifyCode = (int) userInfo.get("verifyCode");
         returnMap = registerService.userRegister(userName, password, email, verifyCode);
         return returnMap;
     }
