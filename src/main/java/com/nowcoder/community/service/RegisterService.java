@@ -21,7 +21,7 @@ public class RegisterService {
 //    生成验证码并存入数据库
     public int generateVerifyCode(String email){
         TbRegisterMessage tbRegisterMessage = new TbRegisterMessage();//初始化实体类结构体
-        int verifyCode = 0;//声明验证码
+        int verifyCode;//声明验证码
         tbRegisterMessage.setEmail(email);
         verifyCode = (int)((Math.random()*9+1)*100000);//生成一个随机6位数存入verifyCode
         tbRegisterMessage.setVerifyCode(verifyCode);
@@ -40,21 +40,15 @@ public class RegisterService {
     }
 
     public TbRegisterMessage getVerifyCode(String email){
-        TbRegisterMessage tbRegisterMessage = tbRegisterMessageMapper.selectTbRegisterMessage(email);
-        return tbRegisterMessage;
+        return tbRegisterMessageMapper.selectTbRegisterMessage(email);
     }
 
     public Map<String,Object> generateVerifyCodeAndSend(String email){
-        int generateStatus = 0;//定义变量generateStatus，0-成功生成，1-生成失败
+        int generateStatus;//定义变量generateStatus，0-成功生成，1-生成失败
         Map<String,Object> returnMap = new HashMap<>();//声明返回结构体
-        if(email.length()==0){
-            returnMap.put("status",1);
-            returnMap.put("reason","Email地址为空，请输入Email");
-            return returnMap;
-        }
         generateStatus = generateVerifyCode(email);
         if(generateStatus == 0){//成功生成验证码，进行发送操作
-            int sendStatus = 0;//定义变量sendStatus，0-成功发送，1-发送失败
+            int sendStatus;//定义变量sendStatus，0-成功发送，1-发送失败
             TbRegisterMessage tbRegisterMessage = getVerifyCode(email);
             String verifyMessage = tbRegisterMessage.getVerifyMessage();
             sendStatus = mailClient.sendMail(email,verifyMessage,verifyMessage);
