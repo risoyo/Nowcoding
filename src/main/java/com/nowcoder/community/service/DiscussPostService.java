@@ -9,8 +9,12 @@ import java.util.List;
 
 @Service
 public class DiscussPostService {
-    @Autowired
     private DiscussPostMapper discussPostMapper;
+
+    @Autowired
+    public DiscussPostService(DiscussPostMapper discussPostMapper){
+        this.discussPostMapper = discussPostMapper;
+    }
 
     public List<DiscussPost> findDiscussPosts(int userId, int offSet, int limit) {
         // userId:查询特定用户的帖子，为0时查询所有用户
