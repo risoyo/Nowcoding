@@ -22,7 +22,7 @@ public class HomeController {
     private final UserService userService;
 
     @Autowired
-    public HomeController(DiscussPostService discussPostService,UserService userService){
+    public HomeController(DiscussPostService discussPostService, UserService userService) {
         this.discussPostService = discussPostService;
         this.userService = userService;
     }

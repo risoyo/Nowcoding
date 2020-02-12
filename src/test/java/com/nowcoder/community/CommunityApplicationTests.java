@@ -1,6 +1,5 @@
 package com.nowcoder.community;
 
-import com.nowcoder.community.config.AlphaConfig;
 import com.nowcoder.community.dao.AlphaDao;
 import com.nowcoder.community.service.AlphaService;
 import org.junit.Test;
@@ -21,47 +20,47 @@ import java.util.Date;
 @SpringBootTest
 @ContextConfiguration(classes = CommunityApplication.class)  // 指名运行的测试代码的配置类
 public class CommunityApplicationTests implements ApplicationContextAware {
-	private ApplicationContext applicationContext;
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
-	}
-	// 当一个类实现了ApplicationContextAware的setApplicationContext方法时，Spring扫描后会把自身存储进来
-	//
-	@Test
-	public void testApplicationContext(){
-		System.out.println(applicationContext);
-		AlphaDao alphaDao = applicationContext.getBean(AlphaDao.class); // 在容器中获取AlphaDao.class这个类型的bean
-		// 但是在当前接口有多个实现类的时候，就会有两个满足条件的bean
-		System.out.println(alphaDao.select());
-		alphaDao = applicationContext.getBean("alphaHibernate",AlphaDao.class);// 为bean命名之后，可以用此方法调用指定的bean
-		System.out.println(alphaDao.select());
-	}
+    private ApplicationContext applicationContext;
+    @Autowired // 此注解标明是注入
+    @Qualifier("alphaHibernate")  // 指定注入的bean的名字
+    private AlphaDao alphaDao;
+    @Autowired
+    private SimpleDateFormat simpleDateFormat;
 
-	@Test
-	public void testDestroy(){
-		AlphaService alphaService = applicationContext.getBean(AlphaService.class);
-		System.out.println(alphaService);
-		alphaService = applicationContext.getBean(AlphaService.class);
-		System.out.println(alphaService);
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 
-	@Test
-	public void testData(){
-		SimpleDateFormat simpleDateFormat = applicationContext.getBean(SimpleDateFormat.class);
-		System.out.println(simpleDateFormat.format(new Date()));
-	}
+    // 当一个类实现了ApplicationContextAware的setApplicationContext方法时，Spring扫描后会把自身存储进来
+    //
+    @Test
+    public void testApplicationContext() {
+        System.out.println(applicationContext);
+        AlphaDao alphaDao = applicationContext.getBean(AlphaDao.class); // 在容器中获取AlphaDao.class这个类型的bean
+        // 但是在当前接口有多个实现类的时候，就会有两个满足条件的bean
+        System.out.println(alphaDao.select());
+        alphaDao = applicationContext.getBean("alphaHibernate", AlphaDao.class);// 为bean命名之后，可以用此方法调用指定的bean
+        System.out.println(alphaDao.select());
+    }
 
-	@Autowired // 此注解标明是注入
-	@Qualifier("alphaHibernate")  // 指定注入的bean的名字
-	private AlphaDao alphaDao;
+    @Test
+    public void testDestroy() {
+        AlphaService alphaService = applicationContext.getBean(AlphaService.class);
+        System.out.println(alphaService);
+        alphaService = applicationContext.getBean(AlphaService.class);
+        System.out.println(alphaService);
+    }
 
-	@Autowired
-	private SimpleDateFormat simpleDateFormat;
+    @Test
+    public void testData() {
+        SimpleDateFormat simpleDateFormat = applicationContext.getBean(SimpleDateFormat.class);
+        System.out.println(simpleDateFormat.format(new Date()));
+    }
 
-	@Test
-	public void testDI(){
+    @Test
+    public void testDI() {
 //		System.out.println(alphaDao.select());
-		System.out.println(simpleDateFormat.format(new Date()));
-	}
+        System.out.println(simpleDateFormat.format(new Date()));
+    }
 }

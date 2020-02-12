@@ -18,17 +18,19 @@ import java.util.Date;
 public class RegisterTests {
     @Autowired
     private TbRegisterMessageMapper tbRegisterMessageMapper;
+    @Autowired
+    private RegisterService registerService;
 
     @Test
-    public  void testVerifyCodeSelect(){
+    public void testVerifyCodeSelect() {
         TbRegisterMessage tbRegisterMessage = tbRegisterMessageMapper.selectTbRegisterMessage("risoyo@163.com");
-        System.out.println((int)((Math.random()*9+1)*100000));
+        System.out.println((int) ((Math.random() * 9 + 1) * 100000));
         System.out.println(tbRegisterMessage);
         System.out.println(tbRegisterMessage.getVerifyCode());
     }
 
     @Test
-    public void testInsertVerifyMessage(){
+    public void testInsertVerifyMessage() {
         TbRegisterMessage tbRegisterMessage = new TbRegisterMessage();
         tbRegisterMessage.setEmail("risoyo@163.com");
         tbRegisterMessage.setVerifyCode(23445);
@@ -41,16 +43,14 @@ public class RegisterTests {
         System.out.println(tbRegisterMessageMapper.selectTbRegisterMessage("risoyo@163.com"));
     }
 
-    @Autowired
-    private RegisterService registerService;
     @Test
-    public void testGenerateVerifyCode(){
+    public void testGenerateVerifyCode() {
         int result = registerService.generateVerifyCode("risoyo@163.com");
         System.out.println(result);
     }
 
     @Test
-    public void testGetVerifyCode(){
+    public void testGetVerifyCode() {
         TbRegisterMessage tbRegisterMessage = registerService.getVerifyCode("risoyo@163.com");
         System.out.println(tbRegisterMessage);
     }

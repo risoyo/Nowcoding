@@ -26,7 +26,6 @@ public class TbRegisterMessage {
     }
 
 
-
     public int getId() {
         return id;
     }
@@ -82,8 +81,6 @@ public class TbRegisterMessage {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-
-
 
 
 }

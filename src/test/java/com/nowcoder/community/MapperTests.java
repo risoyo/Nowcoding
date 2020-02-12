@@ -21,7 +21,8 @@ import java.util.List;
 public class MapperTests {
     @Autowired
     private UserMapper userMapper;
-
+    @Autowired
+    private DiscussPostMapper discussPostMapper;
 
     @Test
     public void testSelectById() {
@@ -48,9 +49,6 @@ public class MapperTests {
         int rows = userMapper.updateStatus(150, 1);
         System.out.println(rows);
     }
-
-    @Autowired
-    private DiscussPostMapper discussPostMapper;
 
     @Test
     public void testDiscussPost() {

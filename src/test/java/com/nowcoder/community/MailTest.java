@@ -16,8 +16,8 @@ public class MailTest {
     private MailClient mailClient;
 
     @Test
-public void mailTest(){
+    public void mailTest() {
 //        调用mailClient.sendMail方法，送入三个参数：收件人，信息标题，信息内容
-    mailClient.sendMail("risoyo@163.com","验证码","您的验证码是【12345】");
-}
+        mailClient.sendMail("risoyo@163.com", "验证码", "您的验证码是【12345】");
+    }
 }

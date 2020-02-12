@@ -88,7 +88,7 @@ public class AlphaController {
 //    @ResponseBody指定返回值格式为自定义
     @ResponseBody
 //    指定传入的值，@RequestBody来接收前台传来的json，HttpServletRequest传入一些参数
-    public Map<String,Object> login(@RequestBody Map<String,Object> map, HttpServletRequest request){
+    public Map<String, Object> login(@RequestBody Map<String, Object> map, HttpServletRequest request) {
 //        获取前台传入json的name节点的值
         String loginId = (String) map.get("name");
         String password = (String) map.get("password");
@@ -96,13 +96,11 @@ public class AlphaController {
         System.out.println(password);
         System.out.println(request.getRequestURL());
 //        初始化值
-        Map<String,Object> returnMap = new HashMap<>();
-        returnMap.put("code",3028271);
-        returnMap.put("verfy",3028271);
+        Map<String, Object> returnMap = new HashMap<>();
+        returnMap.put("code", 3028271);
+        returnMap.put("verfy", 3028271);
         return returnMap;
     }
-
-
 
 
     // 响应JSON数据
