@@ -38,6 +38,6 @@ public class UserService implements CommunityConstant {
         userToInsert.setEmail(email);
         userToInsert.setHeaderUrl("http://11.com");
         userToInsert.setCreateTime(new Date());
-        return userMapper.insertUser(userToInsert);
+        return userMapper.insertUser(userToInsert); // 返回影响行数，若为1则正常插入
     }
 }

@@ -35,6 +35,10 @@ public interface CommunityConstant {
     String VERIFY_CODE_SEND_FAIL = "400102";
     //验证码生成失败
     String VERIFY_CODE_GEN_FAIL = "400101";
+    // 验证码错误
+    String VERIFY_CODE_ERROR = "400104";
+    // 注册失败，未知错误
+    String REGISTER_FAIL = "400105";
 
 
 }
