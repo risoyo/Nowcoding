@@ -12,11 +12,14 @@ import java.util.Map;
 
 @Service
 public class RegisterService {
-    @Autowired
-    private TbRegisterMessageMapper tbRegisterMessageMapper;
+    private final TbRegisterMessageMapper tbRegisterMessageMapper;
+    private final MailClient mailClient;
 
     @Autowired
-    private MailClient mailClient;
+    private RegisterService(TbRegisterMessageMapper tbRegisterMessageMapper,MailClient mailClient){
+        this.tbRegisterMessageMapper = tbRegisterMessageMapper;
+        this.mailClient = mailClient;
+    }
 
 //    生成验证码并存入数据库
     public int generateVerifyCode(String email){

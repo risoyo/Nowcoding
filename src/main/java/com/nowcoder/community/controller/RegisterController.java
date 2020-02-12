@@ -23,18 +23,17 @@ import java.util.Map;
 public class RegisterController {
     private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
-    @Autowired
-    private RegisterService registerService;//验证码相关Service
+    private final RegisterService registerService;//验证码相关Service
 
     @Autowired
-    private MailClient mailClient;//发送邮件工具类
+    public RegisterController(RegisterService registerService) {
+        this.registerService = registerService;
+    }
 
     @RequestMapping(path = "/getVerifyCode")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
     public Map<String,Object> generateVerifyCodeAndSend(@RequestBody Map<String,Object> emailJson, HttpServletRequest request){
-        Map<String,Object> returnMap = new HashMap<>();//声明返回结构体
         String email = (String)emailJson.get("email");
-        returnMap = registerService.generateVerifyCodeAndSend(email);
-        return returnMap;
+        return registerService.generateVerifyCodeAndSend(email);
     }
 }

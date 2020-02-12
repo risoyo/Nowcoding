@@ -18,11 +18,15 @@ import java.util.Map;
 
 @Controller
 public class HomeController {
-    @Autowired
-    private DiscussPostService discussPostService;
+    private final DiscussPostService discussPostService;
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public HomeController(DiscussPostService discussPostService,UserService userService){
+        this.discussPostService = discussPostService;
+        this.userService = userService;
+    }
+
 
     @RequestMapping(path = "/getIndexPost", method = RequestMethod.GET)
     @ResponseBody
@@ -30,8 +34,8 @@ public class HomeController {
             @RequestParam(name = "currentPageNumber", required = false, defaultValue = "1") int currentPageNumber,
             @RequestParam(name = "maxRowsPerPage", required = false, defaultValue = "10") int maxRowsPerPage
     ) {
-        int totalPageNumber = 0;//前台页面显示的总页数
-        int offSet = 0;//前台页面显示的起始行
+        int totalPageNumber;//前台页面显示的总页数
+        int offSet;//前台页面显示的起始行
 
         Page page = new Page();
         page.setCurrentPageNumber(currentPageNumber);//将前台url传入的currentPageNumber传入page

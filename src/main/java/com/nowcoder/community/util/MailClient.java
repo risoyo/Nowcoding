@@ -15,9 +15,12 @@ import javax.mail.internet.MimeMessage;
 public class MailClient {
 
     private static final Logger logger = LoggerFactory.getLogger(MailClient.class);
+    private final JavaMailSender mailSender;
 
     @Autowired
-    private JavaMailSender mailSender;
+    public MailClient(JavaMailSender mailSender){
+        this.mailSender = mailSender;
+    }
 
 //    指定发送人，值为配置文件中的spring.mail.username项
     @Value("${spring.mail.username}")
