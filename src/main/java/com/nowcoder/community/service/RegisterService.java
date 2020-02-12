@@ -2,15 +2,21 @@ package com.nowcoder.community.service;
 
 import com.nowcoder.community.dao.TbRegisterMessageMapper;
 import com.nowcoder.community.entity.TbRegisterMessage;
+import com.nowcoder.community.util.MailClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class RegisterService {
     @Autowired
     private TbRegisterMessageMapper tbRegisterMessageMapper;
+
+    @Autowired
+    private MailClient mailClient;
 
 //    生成验证码并存入数据库
     public int generateVerifyCode(String email){
@@ -36,5 +42,36 @@ public class RegisterService {
     public TbRegisterMessage getVerifyCode(String email){
         TbRegisterMessage tbRegisterMessage = tbRegisterMessageMapper.selectTbRegisterMessage(email);
         return tbRegisterMessage;
+    }
+
+    public Map<String,Object> generateVerifyCodeAndSend(String email){
+        int generateStatus = 0;//定义变量generateStatus，0-成功生成，1-生成失败
+        Map<String,Object> returnMap = new HashMap<>();//声明返回结构体
+        if(email.length()==0){
+            returnMap.put("status",1);
+            returnMap.put("reason","Email地址为空，请输入Email");
+            return returnMap;
+        }
+        generateStatus = generateVerifyCode(email);
+        if(generateStatus == 0){//成功生成验证码，进行发送操作
+            int sendStatus = 0;//定义变量sendStatus，0-成功发送，1-发送失败
+            TbRegisterMessage tbRegisterMessage = getVerifyCode(email);
+            String verifyMessage = tbRegisterMessage.getVerifyMessage();
+            sendStatus = mailClient.sendMail(email,verifyMessage,verifyMessage);
+            if(sendStatus == 0){
+                returnMap.put("status",0);
+                returnMap.put("reason","验证码已发送");
+            }
+            else {
+                returnMap.put("status",2);
+                returnMap.put("reason","验证码发送失败，请重试");
+            }
+
+        }
+        else{
+            returnMap.put("status",1);
+            returnMap.put("reason","生成验证码失败，请重试");
+        }//生成验证码失败，请重试
+        return returnMap;
     }
 }

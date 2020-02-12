@@ -32,34 +32,9 @@ public class RegisterController {
     @RequestMapping(path = "/getVerifyCode")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
     public Map<String,Object> generateVerifyCodeAndSend(@RequestBody Map<String,Object> emailJson, HttpServletRequest request){
-        int generateStatus = 0;//定义变量generateStatus，0-成功生成，1-生成失败
         Map<String,Object> returnMap = new HashMap<>();//声明返回结构体
         String email = (String)emailJson.get("email");
-        if(email.length()==0){
-            returnMap.put("status",1);
-            returnMap.put("reason","Email地址为空，请输入Email");
-            return returnMap;
-        }
-        generateStatus = registerService.generateVerifyCode(email);
-        if(generateStatus == 0){//成功生成验证码，进行发送操作
-            int sendStatus = 0;//定义变量sendStatus，0-成功发送，1-发送失败
-            TbRegisterMessage tbRegisterMessage = registerService.getVerifyCode(email);
-            String verifyMessage = tbRegisterMessage.getVerifyMessage();
-            sendStatus = mailClient.sendMail(email,verifyMessage,verifyMessage);
-            if(sendStatus == 0){
-                returnMap.put("status",0);
-                returnMap.put("reason","验证码已发送");
-            }
-            else {
-                returnMap.put("status",2);
-                returnMap.put("reason","验证码发送失败，请重试");
-            }
-
-        }
-        else{
-            returnMap.put("status",1);
-            returnMap.put("reason","生成验证码失败，请重试");
-        }//生成验证码失败，请重试
+        returnMap = registerService.generateVerifyCodeAndSend(email);
         return returnMap;
     }
 }
