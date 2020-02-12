@@ -12,7 +12,7 @@ public class DiscussPostService {
     private DiscussPostMapper discussPostMapper;
 
     @Autowired
-    public DiscussPostService(DiscussPostMapper discussPostMapper){
+    public DiscussPostService(DiscussPostMapper discussPostMapper) {
         this.discussPostMapper = discussPostMapper;
     }
 

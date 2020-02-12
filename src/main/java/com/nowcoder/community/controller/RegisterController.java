@@ -1,22 +1,15 @@
 package com.nowcoder.community.controller;
 
-import com.nowcoder.community.entity.TbRegisterMessage;
 import com.nowcoder.community.service.RegisterService;
-import com.nowcoder.community.util.MailClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -32,8 +25,8 @@ public class RegisterController {
 
     @RequestMapping(path = "/getVerifyCode")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
-    public Map<String,Object> generateVerifyCodeAndSend(@RequestBody Map<String,Object> emailJson, HttpServletRequest request){
-        String email = (String)emailJson.get("email");
+    public Map<String, Object> generateVerifyCodeAndSend(@RequestBody Map<String, Object> emailJson, HttpServletRequest request) {
+        String email = (String) emailJson.get("email");
         return registerService.generateVerifyCodeAndSend(email);
     }
 }

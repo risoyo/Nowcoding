@@ -86,7 +86,6 @@ public class DiscussPost {
     }
 
 
-
     @Override
     public String toString() {
         return "DiscussPost{" +
@@ -101,10 +100,6 @@ public class DiscussPost {
                 ", score=" + score +
                 '}';
     }
-
-
-
-
 
 
 }

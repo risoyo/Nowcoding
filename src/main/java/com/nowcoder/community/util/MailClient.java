@@ -16,17 +16,16 @@ public class MailClient {
 
     private static final Logger logger = LoggerFactory.getLogger(MailClient.class);
     private final JavaMailSender mailSender;
-
-    @Autowired
-    public MailClient(JavaMailSender mailSender){
-        this.mailSender = mailSender;
-    }
-
-//    指定发送人，值为配置文件中的spring.mail.username项
+    //    指定发送人，值为配置文件中的spring.mail.username项
     @Value("${spring.mail.username}")
     private String from;
 
-//    传入三个变量，收件人、标题、内容
+    @Autowired
+    public MailClient(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
+
+    //    传入三个变量，收件人、标题、内容
     public int sendMail(String to, String subject, String content) {
         try {
             MimeMessage message = mailSender.createMimeMessage();

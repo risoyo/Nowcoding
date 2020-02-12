@@ -10,11 +10,11 @@ public class UserService {
     private final UserMapper userMapper;
 
     @Autowired
-    public UserService(UserMapper userMapper){
+    public UserService(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
 
-    public User findUserById(int userId){
+    public User findUserById(int userId) {
         return userMapper.selectById(userId);
     }
 }
