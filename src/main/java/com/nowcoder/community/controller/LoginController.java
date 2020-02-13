@@ -1,6 +1,6 @@
 package com.nowcoder.community.controller;
 
-<<<<<<< HEAD
+
 import com.nowcoder.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,10 +29,4 @@ public class LoginController {
         returnMap = userService.loginVerifyUser(name, pass);
         return returnMap;
     }
-=======
-import org.springframework.stereotype.Controller;
-
-@Controller
-public class LoginController {
->>>>>>> 80e36198a323989a6bcc124e50eb32a80aae3605
 }
