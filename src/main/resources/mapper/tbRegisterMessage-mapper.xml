@@ -21,6 +21,7 @@
         limit 1
     </select>
 
+<<<<<<< HEAD
     <select id="selectTbRegisterMessageByEmailStatus" resultType="int">
         select  COUNT(*)
         from tb_regist_message
@@ -28,11 +29,14 @@
         and status = 0
     </select>
 
+=======
+>>>>>>> 80e36198a323989a6bcc124e50eb32a80aae3605
     <insert id="insertRegisterMessage" parameterType="TbRegisterMessage" keyProperty="id">
         insert into tb_regist_message (<include refid="insertFields"></include>)
         values(#{email}, #{verifyCode}, #{verifyMessage}, #{usable}, #{status}, #{createTime})
     </insert>
 
+<<<<<<< HEAD
     <update id="updateRegisterMessageStatus">
         update tb_regist_message set status = #{status} where email = #{email} and verify_code = #{verifyCode}
     </update>
@@ -40,5 +44,16 @@
     <update id="updateRegisterMessageUsable">
         update tb_regist_message set usable = #{usable} where email = #{email} and verify_code = #{verifyCode}
     </update>
+=======
+    <select id="selectDiscussPostRows" resultType="int">
+        select count(id)
+        from discuss_post
+        where status != 2
+        <if test="userId!=0">
+            and user_id = #{userId}
+        </if>
+
+    </select>
+>>>>>>> 80e36198a323989a6bcc124e50eb32a80aae3605
 
 </mapper>

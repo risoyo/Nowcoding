@@ -10,6 +10,7 @@ public interface TbRegisterMessageMapper {
     //    根据Email和验证码来查询TbRegisterMessage表
     TbRegisterMessage selectTbRegisterMessage(String email);
 
+<<<<<<< HEAD
     //检查Email状态，是否有已发送未验证的邮件
     int selectTbRegisterMessageByEmailStatus(String email);
 
@@ -22,4 +23,7 @@ public interface TbRegisterMessageMapper {
 
     //用户注册成功后，更改usable状态
     int updateRegisterMessageUsable(String email, int verifyCode, int usable);
+=======
+    int insertRegisterMessage(TbRegisterMessage selectTbRegisterMessage);
+>>>>>>> 80e36198a323989a6bcc124e50eb32a80aae3605
 }

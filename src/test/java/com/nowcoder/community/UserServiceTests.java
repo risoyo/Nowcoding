@@ -19,9 +19,12 @@ public class UserServiceTests {
     public void testSelectUserByName() {
         System.out.println(userService.findUserByName("kkk23456"));
     }
+<<<<<<< HEAD
 
     @Test
     public void testLoginVerifyUser() {
         System.out.println(userService.loginVerifyUser("testuser", "123451"));
     }
+=======
+>>>>>>> 80e36198a323989a6bcc124e50eb32a80aae3605
 }
