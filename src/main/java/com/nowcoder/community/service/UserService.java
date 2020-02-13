@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-<<<<<<< HEAD
 import java.util.Map;
-=======
->>>>>>> 80e36198a323989a6bcc124e50eb32a80aae3605
 
 @Service
 public class UserService implements CommunityConstant {
@@ -33,13 +30,8 @@ public class UserService implements CommunityConstant {
 
     public int insertUser(String userName, String password, String email) {
         User userToInsert = new User();
-<<<<<<< HEAD
         if (userMapper.selectByName(userName) != null) {
             return 0;
-=======
-        if (userMapper.selectByName(userName) == null) {
-            returnService.returnMessage(REGISTER_FAILURE_USERNAME_EXIST);
->>>>>>> 80e36198a323989a6bcc124e50eb32a80aae3605
         }
         userToInsert.setUsername(userName);
         userToInsert.setPassword(password);
@@ -49,7 +41,6 @@ public class UserService implements CommunityConstant {
         userToInsert.setCreateTime(new Date());
         return userMapper.insertUser(userToInsert); // 返回影响行数，若为1则正常插入
     }
-<<<<<<< HEAD
 
     public Map<String, Object> loginVerifyUser(String userName, String password) {
         User userInfo = userMapper.selectByName(userName);
@@ -66,6 +57,4 @@ public class UserService implements CommunityConstant {
         }
         return returnMap;
     }
-=======
->>>>>>> 80e36198a323989a6bcc124e50eb32a80aae3605
 }
