@@ -31,6 +31,8 @@ public interface CommunityConstant {
     String REGISTER_FAILURE_USERNAME_EXIST = "400103";
     //成功
     String SUCCESS = "000000";
+    //失败
+    String FAIL = "999999";
     // 验证码发送失败
     String VERIFY_CODE_SEND_FAIL = "400102";
     //验证码生成失败
@@ -39,6 +41,12 @@ public interface CommunityConstant {
     String VERIFY_CODE_ERROR = "400104";
     // 注册失败，未知错误
     String REGISTER_FAIL = "400105";
+    // 发送失败，邮件已发送
+    String MAIL_SENDED = "400106";
+    //登录失败，用户不存在
+    String USER_NEXIST = "400201";
+    //登录失败，密码错误
+    String PASS_ERROR = "400202";
 
 
 }

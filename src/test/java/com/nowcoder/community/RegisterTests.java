@@ -30,6 +30,12 @@ public class RegisterTests {
     }
 
     @Test
+    public void testSelectTbRegisterMessageByEmailStatus() {
+        System.out.println(tbRegisterMessageMapper.selectTbRegisterMessageByEmailStatus("risoyo@163.com"));
+    }
+
+
+    @Test
     public void testInsertVerifyMessage() {
         TbRegisterMessage tbRegisterMessage = new TbRegisterMessage();
         tbRegisterMessage.setEmail("risoyo@163.com");
@@ -45,8 +51,7 @@ public class RegisterTests {
 
     @Test
     public void testGenerateVerifyCode() {
-        int result = registerService.generateVerifyCode("risoyo@163.com");
-        System.out.println(result);
+        System.out.println(registerService.generateVerifyCode("risoyo@163.com"));
     }
 
     @Test
@@ -54,4 +59,11 @@ public class RegisterTests {
         TbRegisterMessage tbRegisterMessage = registerService.getVerifyCode("risoyo@163.com");
         System.out.println(tbRegisterMessage);
     }
+
+    @Test
+    public void testChangeStatusAndUsable() {
+        tbRegisterMessageMapper.updateRegisterMessageStatus("risoyo@163.com", 123456, 1);
+        tbRegisterMessageMapper.updateRegisterMessageUsable("risoyo@163.com", 123456, 1);
+    }
+
 }
