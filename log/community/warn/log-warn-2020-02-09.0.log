@@ -1,5 +1,0 @@
-2020-02-09 16:36:28,390 WARN [main] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [ThymeleafAutoConfiguration.java:108] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
-2020-02-09 16:36:29,268 WARN [main] c.n.c.LoggerTests [LoggerTests.java:27] warn log
-2020-02-09 16:37:26,599 WARN [main] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [ThymeleafAutoConfiguration.java:108] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
-2020-02-09 16:37:27,404 WARN [main] c.n.c.LoggerTests [LoggerTests.java:27] warn log
-2020-02-09 16:38:06,844 WARN [main] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [ThymeleafAutoConfiguration.java:108] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
