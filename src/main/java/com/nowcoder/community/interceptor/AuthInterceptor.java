@@ -26,7 +26,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
         Object loginStatus = redisService.get(token);//从redis中取token
         if( Objects.isNull(loginStatus)){// 若未取到token，则token无效
-            response.getWriter().print("token错误，请查看！");
+            response.getWriter().print("token错误，请查看！");//响应信息
             return false;
         }
         return true;
