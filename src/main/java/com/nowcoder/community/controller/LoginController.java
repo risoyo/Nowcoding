@@ -29,4 +29,10 @@ public class LoginController {
         returnMap = loginService.loginVerifyUser(name, pass);
         return returnMap;
     }
+
+    @RequestMapping(path = "/test")//定义请求url
+    @ResponseBody//定义返回类型为自定义类型
+    public String initAuth(){
+        return "hello";
+    }
 }
