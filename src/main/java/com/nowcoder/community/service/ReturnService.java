@@ -26,4 +26,13 @@ public class ReturnService implements CommunityConstant {
         return returnMap;
     }
 
+    public Map<String, Object> returnToken(String statusCode,String token) {
+        Map<String, Object> returnMap = new HashMap<>();
+        ReturnInfo returnInfo = returnInfoMapper.selectReturnInfoByCode(statusCode);
+        returnMap.put("resp_code", returnInfo.getRespCode());
+        returnMap.put("resp_info", returnInfo.getRespInfo());
+        returnMap.put("token",token);
+        return returnMap;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.nowcoder.community;
 
+import com.nowcoder.community.service.LoginService;
 import com.nowcoder.community.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +16,9 @@ public class UserServiceTests {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LoginService loginService;
+
     @Test
     public void testSelectUserByName() {
         System.out.println(userService.findUserByName("kkk23456"));
@@ -22,6 +26,6 @@ public class UserServiceTests {
 
     @Test
     public void testLoginVerifyUser() {
-        System.out.println(userService.loginVerifyUser("testuser", "123451"));
+        System.out.println(loginService.loginVerifyUser("testuser", "12345"));
     }
 }

@@ -15,14 +15,16 @@ public class RedisService {
 
     public void set(String key, Object value) {
         //更改在redis里面查看key编码问题
-        RedisSerializer redisSerializer =new StringRedisSerializer();
-        redisTemplate.setKeySerializer(redisSerializer);
+        RedisSerializer<?> redisSerializer =new StringRedisSerializer();
         ValueOperations<String,Object> vo = redisTemplate.opsForValue();
+        redisTemplate.setKeySerializer(redisSerializer);
         vo.set(key, value);
     }
 
     public Object get(String key) {
+        RedisSerializer<?> redisSerializer =new StringRedisSerializer();
         ValueOperations<String,Object> vo = redisTemplate.opsForValue();
+        redisTemplate.setKeySerializer(redisSerializer);
         return vo.get(key);
     }
 
