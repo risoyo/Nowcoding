@@ -24,6 +24,11 @@ public class JWTUtils {
     private JWTUtils(DateUtils dateUtils){
         this.dateUtils = dateUtils;
     }
+
+    /**
+     * 生成jwt
+     * @return 返回生成的无Claim的token
+     */
     public String generateTokenWithoutClaim() {
 
         String secret = "secret";// token 密钥
@@ -48,6 +53,12 @@ public class JWTUtils {
                 .sign(algorithm);//签名 Signature
     }
 
+    /**
+     * 生成附带Claim的token
+     * @param loginName 生成token的参数一：用户名
+     * @param password  生成token的参数二：密码
+     * @return  返回生成的附带Claim的token
+     */
     public String generateTokenWithClaim(String loginName,String password){
         Date nowDate = new Date();
         Date expireDate = dateUtils.getAfterTime(nowDate,expireTime);// 2小过期
@@ -70,6 +81,11 @@ public class JWTUtils {
                 .sign(algorithm);
     }
 
+    /**
+     * 校验不带Claim的token是否正确
+     * @param token 传入的token
+     * @return  True：token正确，False：token错误
+     */
     public boolean verifyTokenWithoutClaim(String token){
         Algorithm algorithm = Algorithm.HMAC256("secret");
         JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withSubject(subject).withAudience(audience).build(); // Reusable verifier instance
@@ -82,6 +98,13 @@ public class JWTUtils {
 
     }
 
+    /**
+     * 校验带Claim的token是否正确
+     * @param token 传入的token
+     * @param loginName 传入的用户名
+     * @param password 传入的密码
+     * @return  True：token正确，False：token错误
+     */
     public boolean verifyTokenWithClaim(String token,String loginName,String password){
         Algorithm algorithm = Algorithm.HMAC256("secret");
         JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withSubject(subject).withAudience(audience).build(); // Reusable verifier instance
