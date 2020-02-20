@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.nowcoder.community.util.DateUtils;
+import com.nowcoder.community.util.JWTUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +44,7 @@ public class JWTTests {
         Algorithm algorithm = Algorithm.HMAC256("secret");
 
         // 头部信息
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
         map.put("typ", "JWT");
 
@@ -68,7 +69,7 @@ public class JWTTests {
         Date nowDate = new Date();
         Date expireDate = dateUtils.getAfterTime(nowDate,30);// 2小过期
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
         map.put("typ", "JWT");
 
@@ -95,13 +96,15 @@ public class JWTTests {
         String token = generateTokenWithoutClaim();
 
         Algorithm algorithm = Algorithm.HMAC256("secret");
-        JWTVerifier verifier = JWT.require(algorithm).withIssuer("SERVICE").build(); // Reusable verifier instance
+        JWTVerifier verifier = JWT.require(algorithm).withIssuer("nowcoding").build(); // Reusable verifier instance
         DecodedJWT jwt = verifier.verify(token);
 
         String subject = jwt.getSubject();
         List<String> audience = jwt.getAudience();
+        String issuer = jwt.getIssuer();
         System.out.println(subject);
         System.out.println(audience.get(0));
+        System.out.println(issuer);
 
     }
     public String generateTokenWithoutClaim() {
@@ -110,16 +113,16 @@ public class JWTTests {
         Algorithm algorithm = Algorithm.HMAC256("secret");
 
         // 头部信息
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
         map.put("typ", "JWT");
 
         Date nowDate = new Date();
-        Date expireDate =  dateUtils.getAfterTime(nowDate,30);;// 2小过期
+        Date expireDate =  dateUtils.getAfterTime(nowDate,30);// 2小过期
 
         String token = JWT.create()
                 .withHeader(map)// 设置头部信息 Header
-                .withIssuer("SERVICE")//设置 载荷 签名是有谁生成 例如 服务器
+                .withIssuer("nowcoding")//设置 载荷 签名是有谁生成 例如 服务器
                 .withSubject("this is test token")//设置 载荷 签名的主题
                 // .withNotBefore(new Date())//设置 载荷 定义在什么时间之前，该jwt都是不可用的.
                 .withAudience("APP")//设置 载荷 签名的观众 也可以理解谁接受签名的
@@ -157,7 +160,7 @@ public class JWTTests {
         Date nowDate = new Date();
         Date expireDate = dateUtils.getAfterTime(nowDate,30);// 2小过期
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
         map.put("typ", "JWT");
 
@@ -177,5 +180,41 @@ public class JWTTests {
         Assert.assertTrue(token.length() > 0);
         System.out.println(token);
         return token;
+    }
+
+    @Autowired
+    private JWTUtils jwtUtils;
+
+    @Test
+    public void generateTokenWithoutClaimTest(){
+        String token = jwtUtils.generateTokenWithoutClaim();
+        if (jwtUtils.verifyTokenWithoutClaim(token)) {
+            System.out.println("token为真");
+        } else {
+            System.out.println("token为假");
+        }
+
+    }
+
+    @Test
+    public void generateTokenWithClaimTest(){
+        String token = jwtUtils.generateTokenWithClaim("testuser","12345");// 使用用户名与密码外加JWT内一些信息生成token
+        System.out.println(token);
+        if (jwtUtils.verifyTokenWithClaim(token,"testuser","12345")) {
+            System.out.println("token为真");
+        } else {
+            System.out.println("token为假");
+        }
+    }
+
+    @Test
+    public void tokenTests(){
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjb2RpbmdSb2FkIiwiYXVkIjoiQVBQIiwicGFzc3dvcmQiOiIxMjM0NSIsImxvZ2luTmFtZSI6InRlc3R1c2VyIiwiaXNzIjoiQWxpU2VydmVyIiwiZXhwIjoxNTgyMjEzNjEzLCJpYXQiOjE1ODIyMTE4MTN9._dxB7zIrmKAIjbfq4CXPASRLJynJWKNq0Tf7-8Pd9Ag\n";
+        if (jwtUtils.verifyTokenWithClaim(token,"testuser","12345")) {
+            System.out.println("token为真");
+        } else {
+            System.out.println("token为假");
+        }
+
     }
 }
