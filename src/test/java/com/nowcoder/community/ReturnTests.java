@@ -2,6 +2,7 @@ package com.nowcoder.community;
 
 import com.nowcoder.community.dao.ReturnInfoMapper;
 import com.nowcoder.community.entity.ReturnMessage;
+import com.nowcoder.community.service.ReturnService;
 import com.nowcoder.community.util.ReturnMessageUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,11 +25,11 @@ public class ReturnTests {
     }
 
     @Autowired
-    private ReturnMessageUtil returnMessageUtil;
+    private ReturnService returnService;
 
     @Test
     public void returnMessageTest(){
-        ReturnMessage returnMessage = returnMessageUtil.sucess();
+        ReturnMessage<?> returnMessage = returnService.success();
         System.out.println(returnMessage);
     }
 }

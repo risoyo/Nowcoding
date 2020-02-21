@@ -2,6 +2,7 @@ package com.nowcoder.community.controller;
 
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.service.AlphaService;
+import com.nowcoder.community.service.ReturnService;
 import com.nowcoder.community.util.ReturnMessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ public class AlphaController {
     private AlphaService alphaService;
 
     @Autowired
-    private ReturnMessageUtil returnMessageUtil;
+    private ReturnService returnService;
 
     @RequestMapping("/hello")
     @ResponseBody
@@ -144,9 +145,19 @@ public class AlphaController {
         return "hello";
     }
 
+
     @RequestMapping(path = "/testReturnMessage", method = RequestMethod.GET)//定义请求url
     @ResponseBody//定义返回类型为自定义类型
-    public ReturnMessage initReturnMessage(){
-        return returnMessageUtil.sucess();
+    public ReturnMessage<?> initReturnMessage(){
+        Map<String,Object> message = new HashMap<>();
+        message.put("message1",1111);
+        message.put("message2",2222);
+        List<Map<String, Object>> indexPostList = new ArrayList<>();//返回的列表集合
+        indexPostList.add(message);
+        message.put("message3",1111);
+        message.put("message4",2222);
+        indexPostList.add(message);
+        return returnService.successWithObjectAndMessage("10",indexPostList);
+//        return returnMessageUtil.error(30001,"数据错误");
     }
 }

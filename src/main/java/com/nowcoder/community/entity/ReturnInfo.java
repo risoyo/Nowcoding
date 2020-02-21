@@ -2,9 +2,9 @@ package com.nowcoder.community.entity;
 
 public class ReturnInfo {
     private int id;
-    private String respCode;
-    private String respInfo;
-    private String sysCode;
+    private String respCode;// 错误码
+    private String respInfo;// 错误信息
+    private String sysCode;// 系统码
 
     @Override
     public String toString() {
