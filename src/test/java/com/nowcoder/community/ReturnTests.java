@@ -1,6 +1,8 @@
 package com.nowcoder.community;
 
 import com.nowcoder.community.dao.ReturnInfoMapper;
+import com.nowcoder.community.entity.ReturnMessage;
+import com.nowcoder.community.util.ReturnMessageUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +21,14 @@ public class ReturnTests {
     public void testReturnInfoSelect() {
 
         System.out.println(returnInfoMapper.selectReturnInfoByCode("400103"));
+    }
+
+    @Autowired
+    private ReturnMessageUtil returnMessageUtil;
+
+    @Test
+    public void returnMessageTest(){
+        ReturnMessage returnMessage = returnMessageUtil.sucess();
+        System.out.println(returnMessage);
     }
 }

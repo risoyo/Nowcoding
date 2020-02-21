@@ -1,6 +1,8 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.service.AlphaService;
+import com.nowcoder.community.util.ReturnMessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,9 @@ import java.util.*;
 public class AlphaController {
     @Autowired
     private AlphaService alphaService;
+
+    @Autowired
+    private ReturnMessageUtil returnMessageUtil;
 
     @RequestMapping("/hello")
     @ResponseBody
@@ -137,5 +142,11 @@ public class AlphaController {
     @ResponseBody//定义返回类型为自定义类型
     public String initAuth(){
         return "hello";
+    }
+
+    @RequestMapping(path = "/testReturnMessage", method = RequestMethod.GET)//定义请求url
+    @ResponseBody//定义返回类型为自定义类型
+    public ReturnMessage initReturnMessage(){
+        return returnMessageUtil.sucess();
     }
 }
