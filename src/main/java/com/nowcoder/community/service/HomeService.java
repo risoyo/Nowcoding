@@ -62,11 +62,7 @@ public class HomeService {
             indexPost.put("comment_count", discussPost.getCommentCount());
             indexPost.put("score", discussPost.getScore());
             indexPostList.add(indexPost);
-            System.out.println(discussPost);
         }
-        System.out.println(page);
-        System.out.println(totalPageNumber);
-        System.out.println(offSet);
         return returnService.successWithObjectAndMessage(totalPageNumber,indexPostList);
     }
 }
