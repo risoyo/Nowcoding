@@ -58,12 +58,13 @@ public class ReturnService implements CommunityConstant {
     }
 
     /**
-     * 无异常 请求成功并有具体内容返回
-     * @param object 需返回的内容
-     * @return 返回message
+     * 无异常 请求成功并有具体message内容和message内容返回
+     * @param message 需返回的message内容
+     * @param object 需返回的object内容
+     * @return 返回ReturnMessage消息
      */
     public ReturnMessage<Object> successWithObjectAndMessage(String message,Object object) {
-        return new ReturnMessage<Object>("0",null,message,object);
+        return new ReturnMessage<Object>("000000","success",message,object);
     }
 
 }

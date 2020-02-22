@@ -15,15 +15,24 @@ import java.util.Map;
 public class HomeService {
     private final DiscussPostService discussPostService;
     private final UserService userService;
+    private final ReturnService returnService;
 
     @Autowired
-    public HomeService(DiscussPostService discussPostService, UserService userService) {
+    public HomeService(DiscussPostService discussPostService, UserService userService,ReturnService returnService) {
         this.discussPostService = discussPostService;
         this.userService = userService;
+        this.returnService = returnService;
     }
 
-    public void getIndexPosts(int currentPageNumber,int maxRowsPerPage){
-        int totalPageNumber;//前台页面显示的总页数
+
+    /**
+     * 获取首页指定页帖子内容的合集以及总页数
+     * @param currentPageNumber 当前页码
+     * @param maxRowsPerPage  每页最大行数
+     * @return 返回json数据，message节点为总页数，String；data节点为帖子内容，ListMap
+     */
+    public ReturnMessage<?> getIndexPosts(int currentPageNumber, int maxRowsPerPage){
+        String totalPageNumber;//前台页面显示的总页数
         int offSet;//前台页面显示的起始行
 
         Page page = new Page();
@@ -31,18 +40,12 @@ public class HomeService {
         page.setRowsMaxCount(discussPostService.findDiscussPostRows(0));//调用discussPostService的方法查出共有多少条数据
         page.setmaxRowsPerPage(maxRowsPerPage);//将前台URL传入的maxRowsPerPage传入page
         page.setPath("/getIndexPost");
-        totalPageNumber = page.getTotalPageNumber();//从page获取总页数
+        totalPageNumber = Integer.toString(page.getTotalPageNumber());//从page获取总页数
         offSet = page.getOffSet();//从page获取此页开始行数
 
 
         List<Map<String, Object>> indexPostList = new ArrayList<>();//返回的列表集合
         List<DiscussPost> discussPosts = discussPostService.findDiscussPosts(0, offSet, maxRowsPerPage);
-
-//      将页面属性存入indexPostList
-        Map<String, Object> indexPageContribute = new HashMap<>();
-        indexPageContribute.put("totalPageNumber", totalPageNumber);
-        indexPageContribute.put("offSet", offSet);
-        indexPostList.add(indexPageContribute);
 
 //        将查询出的本页帖子数据存入List中
         for (DiscussPost discussPost : discussPosts) {
@@ -64,6 +67,6 @@ public class HomeService {
         System.out.println(page);
         System.out.println(totalPageNumber);
         System.out.println(offSet);
-//        return indexPostList;
+        return returnService.successWithObjectAndMessage(totalPageNumber,indexPostList);
     }
 }
