@@ -28,6 +28,13 @@
         and status = 0
     </select>
 
+    <select id="selectTbRegisterMessageByEmailUsable" resultType="int">
+        select  COUNT(*)
+        from tb_regist_message
+        where email = #{email}
+        and usable = 0
+    </select>
+
     <insert id="insertRegisterMessage" parameterType="TbRegisterMessage" keyProperty="id">
         insert into tb_regist_message (<include refid="insertFields"></include>)
         values(#{email}, #{verifyCode}, #{verifyMessage}, #{usable}, #{status}, #{createTime})

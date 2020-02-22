@@ -54,7 +54,7 @@ public class ReturnService implements CommunityConstant {
      * @return 返回message
      */
     public ReturnMessage<Object> success() {
-        return new ReturnMessage<Object>("0","success",null,null);
+        return new ReturnMessage<Object>("000000","成功",null,null);
     }
 
     /**
@@ -65,6 +65,16 @@ public class ReturnService implements CommunityConstant {
      */
     public ReturnMessage<Object> successWithObjectAndMessage(String message,Object object) {
         return new ReturnMessage<Object>("000000","success",message,object);
+    }
+
+    /**
+     * 有自定义错误异常信息
+     * @param statusCode 错误码
+     * @return 返回message
+     */
+    public ReturnMessage<Object> error(String statusCode) {
+        ReturnInfo returnInfo = returnInfoMapper.selectReturnInfoByCode(statusCode);
+        return new ReturnMessage<Object>(statusCode,returnInfo.getRespInfo(),null,null);
     }
 
 }

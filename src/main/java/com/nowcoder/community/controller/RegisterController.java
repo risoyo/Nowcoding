@@ -1,5 +1,6 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.service.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ public class RegisterController {
     private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
     private final RegisterService registerService;//注册相关Service
+    private ReturnMessage<?> returnMap;//定义变量returnMap，用于接收返回结构体
 
     @Autowired
     public RegisterController(RegisterService registerService) {
@@ -25,8 +27,7 @@ public class RegisterController {
 
     @RequestMapping(path = "/getVerifyCode")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
-    public Map<String, Object> generateVerifyCodeAndSend(@RequestBody Map<String, Object> emailJson, HttpServletRequest request) {
-        Map<String, Object> returnMap;//定义变量returnMap，用于接收返回结构体
+    public ReturnMessage<?> generateVerifyCodeAndSend(@RequestBody Map<String, Object> emailJson, HttpServletRequest request) {
         String email = (String) emailJson.get("email");
         returnMap = registerService.generateVerifyCodeAndSend(email);
         return returnMap;
@@ -34,8 +35,8 @@ public class RegisterController {
 
     @RequestMapping(path = "/userRegist")
     @ResponseBody
-    public Map<String, Object> registUser(@RequestBody Map<String, Object> userInfo, HttpServletRequest request) {
-        Map<String, Object> returnMap;//定义变量returnMap，用于接收返回结构体
+    public ReturnMessage<?> registUser(@RequestBody Map<String, Object> userInfo, HttpServletRequest request) {
+
         String userName = (String) userInfo.get("name");
         String password = (String) userInfo.get("pass");
         String email = (String) userInfo.get("email");

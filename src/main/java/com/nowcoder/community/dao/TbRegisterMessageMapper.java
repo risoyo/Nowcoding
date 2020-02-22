@@ -13,6 +13,9 @@ public interface TbRegisterMessageMapper {
     //检查Email状态，是否有已发送未验证的邮件
     int selectTbRegisterMessageByEmailStatus(String email);
 
+    //检查Email状态，是否有已发送未验证的邮件
+    int selectTbRegisterMessageByEmailUsable(String email);
+
 
     // 插入验证码信息
     int insertRegisterMessage(TbRegisterMessage selectTbRegisterMessage);
