@@ -22,7 +22,7 @@ public class RedisService {
     }
 
     public Object get(String key) {
-        RedisSerializer<?> redisSerializer =new StringRedisSerializer();
+        RedisSerializer<?> redisSerializer =new StringRedisSerializer();// 在涉及key的读取/写入操作时，一定要设定key的序列化方法，否则会读取不到
         ValueOperations<String,Object> vo = redisTemplate.opsForValue();
         redisTemplate.setKeySerializer(redisSerializer);
         return vo.get(key);
