@@ -1,9 +1,9 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.annotation.UserLoginToken;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.service.AlphaService;
 import com.nowcoder.community.service.ReturnService;
-import com.nowcoder.community.util.ReturnMessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -141,6 +141,7 @@ public class AlphaController {
 
     @RequestMapping(path = "/test")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
+    @UserLoginToken
     public String initAuth(){
         return "hello";
     }
