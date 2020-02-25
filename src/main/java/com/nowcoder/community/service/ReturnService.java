@@ -64,7 +64,7 @@ public class ReturnService implements CommunityConstant {
      * @return 返回ReturnMessage消息
      */
     public ReturnMessage<Object> successWithObjectAndMessage(String message,Object object) {
-        return new ReturnMessage<Object>("000000","success",message,object);
+        return new ReturnMessage<Object>("000000","成功",message,object);
     }
 
     /**

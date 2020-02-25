@@ -1,6 +1,7 @@
 package com.nowcoder.community.controller;
 
 
+import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +23,9 @@ public class LoginController {
 
     @RequestMapping(path = "/Login")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
-    public Map<String, Object> generateVerifyCodeAndSend(@RequestBody Map<String, Object> loginJson, HttpServletRequest request) {
+    public ReturnMessage<?> generateVerifyCodeAndSend(@RequestBody Map<String, Object> loginJson, HttpServletRequest request) {
         // TODO 添加生成Token并返回前台，添加拦截器，在前台访问url时拦截进行token校验，校验通过则放行，校验不通过强制返回
-        Map<String, Object> returnMap;//定义变量returnMap，用于接收返回结构体
+        ReturnMessage<?> returnMap;//定义变量returnMap，用于接收返回结构体
         String name = (String) loginJson.get("name");
         String pass = (String) loginJson.get("pass");
         returnMap = loginService.loginVerifyUser(name, pass);
