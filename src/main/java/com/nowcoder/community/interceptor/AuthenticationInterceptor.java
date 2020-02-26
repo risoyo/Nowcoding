@@ -6,9 +6,12 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.nowcoder.community.annotation.PassToken;
-import com.nowcoder.community.annotation.UserLoginToken;
+import com.nowcoder.community.annotation.RequireToken;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.service.ReturnService;
 import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.util.BizException;
+import com.nowcoder.community.util.NowcodingErrCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -22,6 +25,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Autowired
     UserService userService;
+    ReturnService returnService;
 
     @Override//实现一个HandlerInterceptor接口
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
@@ -39,13 +43,19 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
+        else{
+            if (token == null) {
+                System.out.println("catcher");
+                throw new BizException(NowcodingErrCode.TOKEN_NEXIST.respCode(),NowcodingErrCode.TOKEN_NEXIST.respMessage());
+            }
+        }
         //检查有没有需要用户权限的注解
-        if (method.isAnnotationPresent(UserLoginToken.class)) {
-            UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
-            if (userLoginToken.required()) {
+        if (method.isAnnotationPresent(RequireToken.class)) {
+            RequireToken requireToken = method.getAnnotation(RequireToken.class);
+            if (requireToken.required()) {
                 // 执行认证
                 if (token == null) {
-                    throw new RuntimeException("无token，请重新登录");
+                    throw new BizException(NowcodingErrCode.TOKEN_NEXIST.respCode(),NowcodingErrCode.TOKEN_NEXIST.respMessage());
                 }
                 // 获取 token 中的 user id
                 String userId;

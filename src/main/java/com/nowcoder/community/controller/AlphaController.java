@@ -1,6 +1,5 @@
 package com.nowcoder.community.controller;
 
-import com.nowcoder.community.annotation.UserLoginToken;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.service.AlphaService;
 import com.nowcoder.community.service.ReturnService;
@@ -139,9 +138,8 @@ public class AlphaController {
         return list;
     }
 
-    @RequestMapping(path = "/test")//定义请求url
+    @RequestMapping(path = "/testRequireToken")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
-    @UserLoginToken
     public String initAuth(){
         return "hello";
     }

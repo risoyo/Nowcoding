@@ -76,5 +76,13 @@ public class ReturnService implements CommunityConstant {
         ReturnInfo returnInfo = returnInfoMapper.selectReturnInfoByCode(statusCode);
         return new ReturnMessage<Object>(statusCode,returnInfo.getRespInfo(),null,null);
     }
+    /**
+     * 有自定义错误异常信息
+     * @param statusCode 错误码
+     * @return 返回message
+     */
+    public ReturnMessage<Object> errorMessage(String statusCode,String errMessage) {
+        return new ReturnMessage<Object>(statusCode,errMessage,null,null);
+    }
 
 }

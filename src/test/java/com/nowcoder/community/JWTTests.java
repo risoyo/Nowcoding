@@ -198,9 +198,9 @@ public class JWTTests {
 
     @Test
     public void generateTokenWithClaimTest(){
-        String token = jwtUtils.generateTokenWithClaim("testuser","12345");// 使用用户名与密码外加JWT内一些信息生成token
+        String token = jwtUtils.generateTokenWithClaim("testuser");// 使用用户名与密码外加JWT内一些信息生成token
         System.out.println(token);
-        if (jwtUtils.verifyTokenWithClaim(token,"testuser","12345")) {
+        if (jwtUtils.verifyTokenWithClaim(token,"testuser")) {
             System.out.println("token为真");
         } else {
             System.out.println("token为假");
@@ -210,7 +210,7 @@ public class JWTTests {
     @Test
     public void tokenTests(){
         String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjb2RpbmdSb2FkIiwiYXVkIjoiQVBQIiwicGFzc3dvcmQiOiIxMjM0NSIsImxvZ2luTmFtZSI6InRlc3R1c2VyIiwiaXNzIjoiQWxpU2VydmVyIiwiZXhwIjoxNTgyMjEzNjEzLCJpYXQiOjE1ODIyMTE4MTN9._dxB7zIrmKAIjbfq4CXPASRLJynJWKNq0Tf7-8Pd9Ag\n";
-        if (jwtUtils.verifyTokenWithClaim(token,"testuser","12345")) {
+        if (jwtUtils.verifyTokenWithClaim(token,"testuser")) {
             System.out.println("token为真");
         } else {
             System.out.println("token为假");

@@ -56,10 +56,9 @@ public class JWTUtils {
     /**
      * 生成附带Claim的token
      * @param loginName 生成token的参数一：用户名
-     * @param password  生成token的参数二：密码
      * @return  返回生成的附带Claim的token
      */
-    public String generateTokenWithClaim(String loginName,String password){
+    public String generateTokenWithClaim(String loginName){
         Date nowDate = new Date();
         Date expireDate = dateUtils.getAfterTime(nowDate,expireTime);// 2小过期
 
@@ -70,7 +69,7 @@ public class JWTUtils {
         Algorithm algorithm = Algorithm.HMAC256("secret");
         return JWT.create().withHeader(map)
                 /* 设置 载荷 Payload */
-                .withClaim("loginName", loginName).withClaim("password", password)
+                .withClaim("loginName", loginName)
                 .withIssuer(issuer)// 签名是有谁生成 例如 服务器
                 .withSubject(subject)// 签名的主题
                 // .withNotBefore(new Date())//定义在什么时间之前，该jwt都是不可用的
@@ -102,10 +101,9 @@ public class JWTUtils {
      * 校验带Claim的token是否正确
      * @param token 传入的token
      * @param loginName 传入的用户名
-     * @param password 传入的密码
      * @return  True：token正确，False：token错误
      */
-    public boolean verifyTokenWithClaim(String token,String loginName,String password){
+    public boolean verifyTokenWithClaim(String token,String loginName){
         Algorithm algorithm = Algorithm.HMAC256("secret");
         JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withSubject(subject).withAudience(audience).build(); // Reusable verifier instance
         DecodedJWT jwt = null;
@@ -119,7 +117,7 @@ public class JWTUtils {
             String key = entry.getKey();
             Claim claim = entry.getValue();
             // 若loginName与password匹配token中的则返回true
-            if(key.equals("loginName") && !claim.asString().equals(loginName) || (key.equals("password") && !claim.asString().equals(password))){
+            if(key.equals("loginName") && !claim.asString().equals(loginName)){
                 return false;
             }
         }
