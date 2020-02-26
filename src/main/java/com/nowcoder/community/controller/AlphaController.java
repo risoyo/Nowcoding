@@ -140,8 +140,10 @@ public class AlphaController {
 
     @RequestMapping(path = "/testRequireToken")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
-    public String initAuth(){
-        return "hello";
+    public  ReturnMessage<?> initAuth(){
+        Map<String,Object> message = new HashMap<>();
+        message.put("message","hello");
+        return returnService.successWithObjectAndMessage("success",message);
     }
 
 
