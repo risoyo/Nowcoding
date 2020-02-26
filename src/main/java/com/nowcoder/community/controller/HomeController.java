@@ -1,5 +1,6 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.annotation.PassToken;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class HomeController {
 
     @RequestMapping(path = "/getIndexPost", method = RequestMethod.GET)
     @ResponseBody
+    @PassToken
     public ReturnMessage<?> getIndexPost(
             @RequestParam(name = "currentPageNumber", required = false, defaultValue = "1") int currentPageNumber,
             @RequestParam(name = "maxRowsPerPage", required = false, defaultValue = "10") int maxRowsPerPage

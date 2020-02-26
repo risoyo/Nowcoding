@@ -1,5 +1,6 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.annotation.PassToken;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.service.RegisterService;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class RegisterController {
 
     @RequestMapping(path = "/getVerifyCode")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
+    @PassToken
     public ReturnMessage<?> generateVerifyCodeAndSend(@RequestBody Map<String, Object> emailJson, HttpServletRequest request) {
         String email = (String) emailJson.get("email");
         returnMap = registerService.generateVerifyCodeAndSend(email);
@@ -35,6 +37,7 @@ public class RegisterController {
 
     @RequestMapping(path = "/userRegist")
     @ResponseBody
+    @PassToken
     public ReturnMessage<?> registUser(@RequestBody Map<String, Object> userInfo, HttpServletRequest request) {
 
         String userName = (String) userInfo.get("name");

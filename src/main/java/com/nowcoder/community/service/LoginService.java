@@ -9,6 +9,8 @@ import com.nowcoder.community.util.NowcodingErrCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -37,7 +39,9 @@ public class LoginService{
         if (userInfo.getPassword().equals(password)) {//密码正确，返回成功
             String token = jwtUtils.generateToken(userName,password); // 使用UUID生成随机字符串作为token
 //            redisService.set(token,userName); //将token存入redis
-            returnMap = returnService.successWithObjectAndMessage(NowcodingErrCode.SUCCESS.respCode(),token);
+            Map<String,Object> message = new HashMap<>();
+            message.put("token",token);
+            returnMap = returnService.successWithObjectAndMessage(NowcodingErrCode.SUCCESS.respCode(),message);
         } else {
             throw new BizException(NowcodingErrCode.PASS_ERROR.respCode(),NowcodingErrCode.PASS_ERROR.respMessage());
         }
