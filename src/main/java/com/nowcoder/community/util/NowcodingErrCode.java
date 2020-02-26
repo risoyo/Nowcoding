@@ -14,10 +14,6 @@ public enum  NowcodingErrCode {
      */
     DEFAULT_SUCCESS("000000","成功"),
     /**
-     * Token信息不存在
-     */
-    TOKEN_NEXIST("400107","Token信息不存在"),
-    /**
      * 注册失败,用户名已存在
       */
     REGISTER_FAILURE_USERNAME_EXIST("400103","注册失败,用户名已存在"),
@@ -49,6 +45,14 @@ public enum  NowcodingErrCode {
      * 登录失败，密码错误
      */
     PASS_ERROR("400202","登录失败，密码错误"),
+    /**
+     * Token信息不存在
+     */
+    TOKEN_NEXIST("400301","Token信息不存在"),
+    /**
+     * Token无效
+     */
+    TOKEN_NVALUE("400302","Token无效"),
     SUCCESS("111","222");
 
 

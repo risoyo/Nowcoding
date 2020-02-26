@@ -3,9 +3,12 @@ package com.nowcoder.community.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.nowcoder.community.dao.UserMapper;
+import com.nowcoder.community.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,20 +19,24 @@ import java.util.Map;
 @Component
 public class JWTUtils {
     private final DateUtils dateUtils;
-    private  final String issuer = "AliServer"; // 设置token签名
-    private  final String subject = "codingRoad";// 设置token主题
+    private UserMapper userMapper;
+    private  final String issuer = Constants.TOKEN_ISSUER; // 设置token签名
+    private  final String subject = Constants.TOKEN_SUBJECT;// 设置token主题
     private  final String audience = "APP";// 设置token接受者
-    private  final int expireTime = 30;// 设置token过期时间
+    private  final int expireTime = Constants.TOKEN_EXPIRE_TIME;// 设置token过期时间
     @Autowired
-    private JWTUtils(DateUtils dateUtils){
+    private JWTUtils(DateUtils dateUtils,UserMapper userMapper){
         this.dateUtils = dateUtils;
+        this.userMapper = userMapper;
     }
 
     /**
      * 生成jwt
+     *  @param userName 生成token的参数一：用户名
+     *  @param password 生成token的参数二：密码
      * @return 返回生成的无Claim的token
      */
-    public String generateTokenWithoutClaim() {
+    public String generateToken(String userName,String password) {
 
         String secret = "secret";// token 密钥
         Algorithm algorithm = Algorithm.HMAC256("secret");
@@ -47,10 +54,10 @@ public class JWTUtils {
                 .withIssuer(issuer)//设置 载荷 签名是有谁生成 例如 服务器
                 .withSubject(subject)//设置 载荷 签名的主题
                 // .withNotBefore(new Date())//设置 载荷 定义在什么时间之前，该jwt都是不可用的.
-                .withAudience(audience)//设置 载荷 签名的观众 也可以理解谁接受签名的
+                .withAudience(userName)//设置 载荷 签名的观众 也可以理解谁接受签名的
                 .withIssuedAt(nowDate) //设置 载荷 生成签名的时间
                 .withExpiresAt(expireDate)//设置 载荷 签名过期的时间
-                .sign(algorithm);//签名 Signature
+                .sign(Algorithm.HMAC256(password));//签名 Signature
     }
 
     /**
@@ -85,13 +92,24 @@ public class JWTUtils {
      * @param token 传入的token
      * @return  True：token正确，False：token错误
      */
-    public boolean verifyTokenWithoutClaim(String token){
-        Algorithm algorithm = Algorithm.HMAC256("secret");
-        JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withSubject(subject).withAudience(audience).build(); // Reusable verifier instance
+    public boolean verifyToken(String token){
+        // 获取 token 中的 user id
+        String userName;
         try {
-            verifier.verify(token); // 验证token，若为真返回true，若为假返回false
+            userName = JWT.decode(token).getAudience().get(0);
+        } catch (JWTDecodeException j) {
+            throw new BizException(NowcodingErrCode.TOKEN_NVALUE.respCode,NowcodingErrCode.TOKEN_NVALUE.respMessage);
+        }
+        User user = userMapper.selectByName(userName);
+        if (user == null) {
+            throw new BizException(NowcodingErrCode.TOKEN_NEXIST.respCode(),NowcodingErrCode.TOKEN_NEXIST.respMessage());
+        }
+        // 验证 token
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
+        try {
+            jwtVerifier.verify(token);
         } catch (JWTVerificationException e) {
-            return false;
+            throw new BizException(NowcodingErrCode.TOKEN_NVALUE.respCode,NowcodingErrCode.TOKEN_NVALUE.respMessage);
         }
         return true;
 

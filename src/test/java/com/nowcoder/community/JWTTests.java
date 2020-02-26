@@ -93,7 +93,7 @@ public class JWTTests {
 
     @Test
     public void verifyTokenWithoutClaim(){
-        String token = generateTokenWithoutClaim();
+        String token = generateToken();
 
         Algorithm algorithm = Algorithm.HMAC256("secret");
         JWTVerifier verifier = JWT.require(algorithm).withIssuer("nowcoding").build(); // Reusable verifier instance
@@ -107,7 +107,7 @@ public class JWTTests {
         System.out.println(issuer);
 
     }
-    public String generateTokenWithoutClaim() {
+    public String generateToken() {
 
         String secret = "secret";// token 密钥
         Algorithm algorithm = Algorithm.HMAC256("secret");
@@ -187,8 +187,8 @@ public class JWTTests {
 
     @Test
     public void generateTokenWithoutClaimTest(){
-        String token = jwtUtils.generateTokenWithoutClaim();
-        if (jwtUtils.verifyTokenWithoutClaim(token)) {
+        String token = jwtUtils.generateToken("testuser","12345");
+        if (jwtUtils.verifyToken(token)) {
             System.out.println("token为真");
         } else {
             System.out.println("token为假");
@@ -216,5 +216,12 @@ public class JWTTests {
             System.out.println("token为假");
         }
 
+    }
+
+    @Test
+    public void testTokenGen(){
+        String token2 = jwtUtils.generateToken("test","123");
+        System.out.println(jwtUtils.generateToken("test","123"));
+        System.out.println(token2);
     }
 }
