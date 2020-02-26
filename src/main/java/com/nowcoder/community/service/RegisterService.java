@@ -3,15 +3,16 @@ package com.nowcoder.community.service;
 import com.nowcoder.community.dao.TbRegisterMessageMapper;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.entity.TbRegisterMessage;
-import com.nowcoder.community.util.CommunityConstant;
+import com.nowcoder.community.util.BizException;
 import com.nowcoder.community.util.MailClient;
+import com.nowcoder.community.util.NowcodingErrCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Service
-public class RegisterService implements CommunityConstant {
+public class RegisterService{
     private final TbRegisterMessageMapper tbRegisterMessageMapper;
     private final MailClient mailClient;
     private final ReturnService returnService;
@@ -34,7 +35,7 @@ public class RegisterService implements CommunityConstant {
         int emailStatus;//声明邮箱状态变量，若以此邮箱查询到status状态为1的邮箱，则代表已发送邮件
         emailStatus = tbRegisterMessageMapper.selectTbRegisterMessageByEmailUsable(email);
         if (emailStatus != 0) {//为1时邮件已发送，直接返回信息
-            return returnService.error(MAIL_SENDED);
+            throw new BizException(NowcodingErrCode.MAIL_SENDED.respCode(),NowcodingErrCode.MAIL_SENDED.respMessage());
         }
         tbRegisterMessage.setEmail(email);
         verifyCode = (int) ((Math.random() * 9 + 1) * 100000);//生成一个随机6位数存入verifyCode
@@ -47,7 +48,7 @@ public class RegisterService implements CommunityConstant {
         if (affectRow == 1) {//若变动行数为1，则已正常插入
             returnMap = returnService.success();
         } else {//若变动行数非1，则插入异常
-            returnMap = returnService.error(VERIFY_CODE_GEN_FAIL);
+            throw new BizException(NowcodingErrCode.VERIFY_CODE_GEN_FAIL.respCode(),NowcodingErrCode.VERIFY_CODE_GEN_FAIL.respMessage());
         }
         return returnMap;
 
@@ -73,7 +74,7 @@ public class RegisterService implements CommunityConstant {
             returnMap = returnService.success();
             tbRegisterMessageMapper.updateRegisterMessageStatus(email, verifyCode, 1);//发送成功时将发送信息置为1
         } else {
-            returnMap = returnService.error(VERIFY_CODE_SEND_FAIL);
+            throw new BizException(NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respCode(),NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respMessage());
         }
 
         return returnMap;
@@ -85,8 +86,7 @@ public class RegisterService implements CommunityConstant {
         int status;//定义status，接收insertUser()返回的影响行数
         int generateStatus;//定义变量generateStatus，0-成功生成，1-生成失败
         if (tbRegisterMessage.getUsable() == 1) {//若验证码使用状态为1，则该验证码已使用，不能再注册
-            returnMap = returnService.error(REGISTER_FAIL);
-            return returnMap;
+            throw new BizException(NowcodingErrCode.REGISTER_FAIL.respCode(),NowcodingErrCode.REGISTER_FAIL.respMessage());
         }
         if (verifyCode == tbRegisterMessage.getVerifyCode()) {//验证码正确
             //调用insert用户的service
@@ -95,10 +95,10 @@ public class RegisterService implements CommunityConstant {
                 tbRegisterMessageMapper.updateRegisterMessageUsable(email, verifyCode, 1);//插入成功时将使用信息置为1
                 returnMap = returnService.success();
             } else {//status非1，则注册失败
-                returnMap = returnService.error(REGISTER_FAIL);
+                throw new BizException(NowcodingErrCode.REGISTER_FAIL.respCode(),NowcodingErrCode.REGISTER_FAIL.respMessage());
             }
         } else {
-            returnMap = returnService.error(VERIFY_CODE_ERROR);
+            throw new BizException(NowcodingErrCode.VERIFY_CODE_ERROR.respCode(),NowcodingErrCode.VERIFY_CODE_ERROR.respMessage());
         }
         return returnMap;
     }
