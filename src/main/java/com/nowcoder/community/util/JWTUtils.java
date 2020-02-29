@@ -20,14 +20,16 @@ import java.util.Map;
 public class JWTUtils {
     private final DateUtils dateUtils;
     private UserMapper userMapper;
+    private HostHolder hostHolder;
     private  final String issuer = Constants.TOKEN_ISSUER; // 设置token签名
     private  final String subject = Constants.TOKEN_SUBJECT;// 设置token主题
     private  final String audience = "APP";// 设置token接受者
     private  final int expireTime = Constants.TOKEN_EXPIRE_TIME;// 设置token过期时间
     @Autowired
-    private JWTUtils(DateUtils dateUtils,UserMapper userMapper){
+    private JWTUtils(DateUtils dateUtils,UserMapper userMapper,HostHolder hostHolder){
         this.dateUtils = dateUtils;
         this.userMapper = userMapper;
+        this.hostHolder = hostHolder;
     }
 
     /**
@@ -101,6 +103,7 @@ public class JWTUtils {
             throw new BizException(NowcodingErrCode.TOKEN_NVALUE.respCode,NowcodingErrCode.TOKEN_NVALUE.respMessage);
         }
         User user = userMapper.selectByName(userName);
+        hostHolder.setUser(user);  // 调用hostHolder来在当前线程存储用户数据
         if (user == null) {
             throw new BizException(NowcodingErrCode.TOKEN_NEXIST.respCode(),NowcodingErrCode.TOKEN_NEXIST.respMessage());
         }

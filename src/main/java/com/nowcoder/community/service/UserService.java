@@ -40,4 +40,14 @@ public class UserService{
         return userMapper.insertUser(userToInsert); // 返回影响行数，若为1则正常插入
     }
 
+    /**
+     * 更新用户的头像url
+     * @param userId 用户的userID
+     * @param headerUrl 头像的url
+     * @return 影响行数（1-正常）
+     */
+    public int updateHeader(int userId,String headerUrl){
+        return userMapper.updateHeader(userId,headerUrl);
+    }
+
 }

@@ -53,6 +53,10 @@ public enum  NowcodingErrCode {
      * Token无效
      */
     TOKEN_NVALUE("400302","Token无效"),
+    /**
+     * 头像上传失败
+     */
+    UPLOAD_FAIL("400401","头像上传失败"),
     SUCCESS("111","222");
 
 

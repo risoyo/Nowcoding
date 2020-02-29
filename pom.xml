@@ -82,9 +82,18 @@
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>2.30</version>
 		</dependency>
-
-
-	</dependencies>
+        <dependency>
+            <groupId>com.vaadin.external.google</groupId>
+            <artifactId>android-json</artifactId>
+            <version>0.0.20131108.vaadin1</version>
+            <scope>compile</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
+		</dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
