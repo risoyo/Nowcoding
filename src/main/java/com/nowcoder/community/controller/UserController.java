@@ -104,7 +104,7 @@ public class UserController {
 
         String headerUrl = domain + contextPath + "/img/header/" + fileName;
 
-//        userService.updateHeader(user.getId(),headerUrl);
+        userService.updateHeader(user.getId(),headerUrl);
         System.out.println(user.getId());
         System.out.println(headerUrl);
 
