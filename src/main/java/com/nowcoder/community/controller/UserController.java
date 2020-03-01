@@ -57,8 +57,8 @@ public class UserController {
         System.out.println(picture.getContentType());
         System.out.println(avatarPath);
 
-        File filePath = new File(path);
-        System.out.println("文件的保存路径：" + path);
+        File filePath = new File(avatarPath);
+        System.out.println("文件的保存路径：" + avatarPath);
         if (!filePath.exists() && !filePath.isDirectory()) {
             System.out.println("目录不存在，创建目录:" + filePath);
             filePath.mkdir();
@@ -83,7 +83,7 @@ public class UserController {
         System.out.println("新文件名称：" + fileName);
 
         //在指定路径下创建一个文件
-        File targetFile = new File(path, fileName);
+        File targetFile = new File(avatarPath, fileName);
 
         //将文件保存到服务器指定位置
         try {
@@ -105,6 +105,7 @@ public class UserController {
         String headerUrl = domain + contextPath + "/img/header/" + fileName;
 
 //        userService.updateHeader(user.getId(),headerUrl);
+        System.out.println(user.getId());
         System.out.println(headerUrl);
 
         return returnService.success();
