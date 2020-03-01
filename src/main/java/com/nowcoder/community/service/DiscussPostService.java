@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class DiscussPostService {
-    private DiscussPostMapper discussPostMapper;
+    private final DiscussPostMapper discussPostMapper;
 
     @Autowired
     public DiscussPostService(DiscussPostMapper discussPostMapper) {

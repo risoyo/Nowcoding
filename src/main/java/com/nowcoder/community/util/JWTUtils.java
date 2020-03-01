@@ -23,8 +23,8 @@ public class JWTUtils {
     private final String subject = Constants.TOKEN_SUBJECT;// 设置token主题
     private final String audience = "APP";// 设置token接受者
     private final int expireTime = Constants.TOKEN_EXPIRE_TIME;// 设置token过期时间
-    private UserMapper userMapper;
-    private HostHolder hostHolder;
+    private final UserMapper userMapper;
+    private final HostHolder hostHolder;
 
     @Autowired
     private JWTUtils(DateUtils dateUtils, UserMapper userMapper, HostHolder hostHolder) {

@@ -12,13 +12,10 @@ import java.util.Date;
 public class UserService {
 
     private final UserMapper userMapper;
-    private final ReturnService returnService;
-    private final String defaultAvatar = Constants.DEFAULT_AVATAR;
 
     @Autowired
-    public UserService(UserMapper userMapper, ReturnService returnService) {
+    public UserService(UserMapper userMapper) {
         this.userMapper = userMapper;
-        this.returnService = returnService;
     }
 
     public User findUserById(int userId) {
@@ -38,6 +35,7 @@ public class UserService {
         userToInsert.setPassword(password);
         userToInsert.setSalt("abc");
         userToInsert.setEmail(email);
+        String defaultAvatar = Constants.DEFAULT_AVATAR;
         userToInsert.setHeaderUrl(defaultAvatar);
         userToInsert.setCreateTime(new Date());
         return userMapper.insertUser(userToInsert); // 返回影响行数，若为1则正常插入
