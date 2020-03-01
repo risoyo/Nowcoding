@@ -26,8 +26,6 @@ public class AuthInterConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(initAuthInterceptor()).addPathPatterns("/**"); //为拦截器添加匹配规则
-//                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg")
-
     }//addPathPatterns-指定拦截路径，excludePathPatterns-排除拦截路径
 }
 
