@@ -16,6 +16,7 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
 
     /**
      * 配置资源访问
+     *
      * @param registry 默认
      */
     @Override
@@ -24,8 +25,8 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
         // 可添加多条，如下
         // http://localhost:8080/community/img/header/** 对应了avatarPath下所有的文件
         // http://localhost:8080/community/img/** 对应了path下所有的文件
-        registry.addResourceHandler("/img/header/**").addResourceLocations("file:"+ avatarPath);
-        registry.addResourceHandler("/img/**").addResourceLocations("file:"+ path);
+        registry.addResourceHandler("/img/header/**").addResourceLocations("file:" + avatarPath);
+        registry.addResourceHandler("/img/**").addResourceLocations("file:" + path);
     }
 }
 

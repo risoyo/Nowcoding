@@ -27,6 +27,6 @@ public class HomeController {
             @RequestParam(name = "currentPageNumber", required = false, defaultValue = "1") int currentPageNumber,
             @RequestParam(name = "maxRowsPerPage", required = false, defaultValue = "10") int maxRowsPerPage
     ) {
-        return homeService.getIndexPosts(currentPageNumber,maxRowsPerPage);
+        return homeService.getIndexPosts(currentPageNumber, maxRowsPerPage);
     }
 }

@@ -19,18 +19,16 @@ import java.lang.reflect.Method;
 public class AuthInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private JWTUtils jwtUtils;
-
-    @Autowired
     HostHolder hostHolder;
-
+    @Autowired
+    private JWTUtils jwtUtils;
 
     // 在Controller之前执行
     @Override//实现一个HandlerInterceptor接口
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");// 从 http 请求头中取出 token
         // 如果不是映射到方法直接通过
-        if(!(handler instanceof HandlerMethod)){
+        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -41,15 +39,14 @@ public class AuthInterceptor implements HandlerInterceptor {
             if (passToken.required()) {
                 return true;
             }
-        }
-        else{
+        } else {
             if (token == null) {
-                throw new BizException(NowcodingErrCode.TOKEN_NEXIST.respCode(),NowcodingErrCode.TOKEN_NEXIST.respMessage());
+                throw new BizException(NowcodingErrCode.TOKEN_NEXIST.respCode(), NowcodingErrCode.TOKEN_NEXIST.respMessage());
             }
         }
         boolean val = jwtUtils.verifyToken(token);
-        if(!jwtUtils.verifyToken(token)){
-            throw new BizException(NowcodingErrCode.TOKEN_NVALUE.respCode(),NowcodingErrCode.TOKEN_NVALUE.respMessage());
+        if (!jwtUtils.verifyToken(token)) {
+            throw new BizException(NowcodingErrCode.TOKEN_NVALUE.respCode(), NowcodingErrCode.TOKEN_NVALUE.respMessage());
         }
         return true;
     }

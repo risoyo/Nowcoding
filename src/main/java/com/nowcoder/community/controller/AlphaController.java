@@ -22,25 +22,25 @@ public class AlphaController {
 
     @RequestMapping(path = "/testRequireToken")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
-    public  ReturnMessage<?> initAuth(){
-        Map<String,Object> message = new HashMap<>();
-        message.put("message","hello");
-        return returnService.successWithObjectAndMessage("success",message);
+    public ReturnMessage<?> initAuth() {
+        Map<String, Object> message = new HashMap<>();
+        message.put("message", "hello");
+        return returnService.successWithObjectAndMessage("success", message);
     }
 
 
     @RequestMapping(path = "/testReturnMessage", method = RequestMethod.GET)//定义请求url
     @ResponseBody//定义返回类型为自定义类型
-    public ReturnMessage<?> initReturnMessage(){
-        Map<String,Object> message = new HashMap<>();
-        message.put("message1",1111);
-        message.put("message2",2222);
+    public ReturnMessage<?> initReturnMessage() {
+        Map<String, Object> message = new HashMap<>();
+        message.put("message1", 1111);
+        message.put("message2", 2222);
         List<Map<String, Object>> indexPostList = new ArrayList<>();//返回的列表集合
         indexPostList.add(message);
-        message.put("message3",1111);
-        message.put("message4",2222);
+        message.put("message3", 1111);
+        message.put("message4", 2222);
         indexPostList.add(message);
-        return returnService.successWithObjectAndMessage("10",indexPostList);
+        return returnService.successWithObjectAndMessage("10", indexPostList);
 //        return returnMessageUtil.error(30001,"数据错误");
     }
 }

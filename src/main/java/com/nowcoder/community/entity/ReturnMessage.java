@@ -8,7 +8,7 @@ public class ReturnMessage<T> {
     private String message;//提示信息
     private T data;//返回具体内容
 
-    public ReturnMessage(String respCode,String respInfo,String message, T data) {
+    public ReturnMessage(String respCode, String respInfo, String message, T data) {
         super();
         this.respCode = respCode;
         this.respInfo = respInfo;

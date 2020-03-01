@@ -14,14 +14,14 @@ public class AuthInterConfig implements WebMvcConfigurer {
 
     // 必须先实例化AuthInterceptor，否则AuthInterceptor中的注入不会生效
     @Bean
-    public AuthInterceptor initAuthInterceptor(){ //对拦截器进行初始化
+    public AuthInterceptor initAuthInterceptor() { //对拦截器进行初始化
         return new AuthInterceptor();
     }
 
     /**
-     - /**： 匹配所有路径
-     - /test/**：匹配 /test/ 下的所有路径
-     - /secure/*：只匹配 /secure/user，不匹配 /secure/user/info
+     * - /**： 匹配所有路径
+     * - /test/**：匹配 /test/ 下的所有路径
+     * - /secure/*：只匹配 /secure/user，不匹配 /secure/user/info
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

@@ -30,35 +30,28 @@ public class UserController {
     private final ReturnService returnService;
     private final HostHolder hostholder;
     private final UserService userService;
+    @Value("${community.path.upload}")
+    private String path;
+    @Value("${community.path.domain}")
+    private String domain;
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+    @Value("${community.path.avatarUpload}")
+    private String avatarPath;
 
-    private UserController(ReturnService returnService,HostHolder hostholder,UserService userService){
+    private UserController(ReturnService returnService, HostHolder hostholder, UserService userService) {
         this.returnService = returnService;
         this.hostholder = hostholder;
         this.userService = userService;
     }
 
-    @Value("${community.path.upload}")
-    private String path;
-
-    @Value("${community.path.domain}")
-    private String domain;
-
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
-
-    @Value("${community.path.avatarUpload}")
-    private String avatarPath;
-
-    @RequestMapping("/up")
+    @RequestMapping("/uploadHeaderImage")
     @ResponseBody//定义返回类型为自定义类型
-    public ReturnMessage<?> up(@RequestParam("picFile") MultipartFile picture, HttpServletRequest request) {
+    public ReturnMessage<?> uploadHeaderImage(@RequestParam("file") MultipartFile picture, HttpServletRequest request) {
 
 
         System.out.println(picture.getContentType());
-        System.out.println(avatarPath);
-
         File filePath = new File(avatarPath);
-        System.out.println("文件的保存路径：" + avatarPath);
         if (!filePath.exists() && !filePath.isDirectory()) {
             System.out.println("目录不存在，创建目录:" + filePath);
             filePath.mkdir();
@@ -80,7 +73,6 @@ public class UserController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String date = sdf.format(d);
         String fileName = date + name + "." + type;
-        System.out.println("新文件名称：" + fileName);
 
         //在指定路径下创建一个文件
         File targetFile = new File(avatarPath, fileName);
@@ -89,26 +81,24 @@ public class UserController {
         try {
             // 存储文件
             picture.transferTo(targetFile);
-            System.out.println("上传成功");
             //将文件在服务器的存储路径返回
 //            return returnService.success();
         } catch (IOException e) {
-            System.out.println("上传失败");
             e.printStackTrace();
-            throw new BizException(NowcodingErrCode.UPLOAD_FAIL.respCode(),NowcodingErrCode.UPLOAD_FAIL.respMessage());
+            throw new BizException(NowcodingErrCode.UPLOAD_FAIL.respCode(), NowcodingErrCode.UPLOAD_FAIL.respMessage());
         }
 
-        // 更新当前用户头像的路径（web访问路径）
-        //http:/localhost:8080/community/user/header/xxx.png
+
+        //在拦截器中将用户信息存入了hostholder
         User user = hostholder.getUser();
 
         String headerUrl = domain + contextPath + "/img/header/" + fileName;
 
-        userService.updateHeader(user.getId(),headerUrl);
-        System.out.println(user.getId());
-        System.out.println(headerUrl);
+        // 更新当前用户头像的路径（web访问路径）
+        //http:/localhost:8080/community/user/header/xxx.png
+        userService.updateHeader(user.getId(), headerUrl);
 
-        return returnService.success();
+        return returnService.successWithMessage(headerUrl);// 在返回的message节点中装入headerURL
 
     }
 }

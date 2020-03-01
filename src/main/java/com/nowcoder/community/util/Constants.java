@@ -17,4 +17,8 @@ public class Constants {
      * token主题
      */
     public static final String TOKEN_SUBJECT = "codingRoad";
+    /**
+     * 默认头像URL
+     */
+    public static final String DEFAULT_AVATAR = "http://localhost:8081/community/img/header/default.png";
 }

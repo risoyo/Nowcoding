@@ -18,7 +18,7 @@ public class HomeService {
     private final ReturnService returnService;
 
     @Autowired
-    public HomeService(DiscussPostService discussPostService, UserService userService,ReturnService returnService) {
+    public HomeService(DiscussPostService discussPostService, UserService userService, ReturnService returnService) {
         this.discussPostService = discussPostService;
         this.userService = userService;
         this.returnService = returnService;
@@ -27,11 +27,12 @@ public class HomeService {
 
     /**
      * 获取首页指定页帖子内容的合集以及总页数
+     *
      * @param currentPageNumber 当前页码
-     * @param maxRowsPerPage  每页最大行数
+     * @param maxRowsPerPage    每页最大行数
      * @return 返回json数据，message节点为总页数，String；data节点为帖子内容，ListMap
      */
-    public ReturnMessage<?> getIndexPosts(int currentPageNumber, int maxRowsPerPage){
+    public ReturnMessage<?> getIndexPosts(int currentPageNumber, int maxRowsPerPage) {
         String totalPageNumber;//前台页面显示的总页数
         int offSet;//前台页面显示的起始行
 
@@ -63,6 +64,6 @@ public class HomeService {
             indexPost.put("score", discussPost.getScore());
             indexPostList.add(indexPost);
         }
-        return returnService.successWithObjectAndMessage(totalPageNumber,indexPostList);
+        return returnService.successWithObjectAndMessage(totalPageNumber, indexPostList);
     }
 }

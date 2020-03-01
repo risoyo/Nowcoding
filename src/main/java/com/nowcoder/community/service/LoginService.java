@@ -14,14 +14,14 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class LoginService{
+public class LoginService {
     private final UserMapper userMapper;
     private final ReturnService returnService;
     private final RedisService redisService;
     private final JWTUtils jwtUtils;
 
     @Autowired
-    private LoginService(UserMapper userMapper,ReturnService returnService,RedisService redisService,JWTUtils jwtUtils) {
+    private LoginService(UserMapper userMapper, ReturnService returnService, RedisService redisService, JWTUtils jwtUtils) {
         this.userMapper = userMapper;
         this.returnService = returnService;
         this.redisService = redisService;
@@ -34,27 +34,27 @@ public class LoginService{
         ReturnMessage<?> returnMap;//定义变量returnMap，用于接收返回结构体
         System.out.println(userInfo);
         if (userInfo == null) {//若userInfo为空，则用户不存在
-            throw new BizException(NowcodingErrCode.USER_NEXIST.respCode(),NowcodingErrCode.USER_NEXIST.respMessage());
+            throw new BizException(NowcodingErrCode.USER_NEXIST.respCode(), NowcodingErrCode.USER_NEXIST.respMessage());
         }
         if (userInfo.getPassword().equals(password)) {//密码正确，返回成功
-            String token = jwtUtils.generateToken(userName,password); // 使用UUID生成随机字符串作为token
+            String token = jwtUtils.generateToken(userName, password); // 使用jwtUtils生成随机字符串作为token
 //            redisService.set(token,userName); //将token存入redis
-            Map<String,Object> message = new HashMap<>();
-            message.put("token",token);
-            returnMap = returnService.successWithObjectAndMessage(NowcodingErrCode.SUCCESS.respCode(),message);
+            Map<String, Object> message = new HashMap<>();
+            message.put("token", token);
+            message.put("headerURL", userInfo.getHeaderUrl());
+            returnMap = returnService.successWithObjectAndMessage(NowcodingErrCode.SUCCESS.respCode(), message);
         } else {
-            throw new BizException(NowcodingErrCode.PASS_ERROR.respCode(),NowcodingErrCode.PASS_ERROR.respMessage());
+            throw new BizException(NowcodingErrCode.PASS_ERROR.respCode(), NowcodingErrCode.PASS_ERROR.respMessage());
         }
         return returnMap;
     }
 
-    public int tokenVerify(String token){
+    public int tokenVerify(String token) {
         Object name = redisService.get(token);
         System.out.println(name);
-        if(Objects.isNull(name)){
+        if (Objects.isNull(name)) {
             return 1;
-        }
-        else{
+        } else {
             return 0;
         }
     }

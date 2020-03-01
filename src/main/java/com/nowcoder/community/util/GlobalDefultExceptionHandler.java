@@ -17,6 +17,6 @@ public class GlobalDefultExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ReturnMessage<?> defultExcepitonHandler(BizException e) {
-        return returnService.errorMessage(e.getErrorCode(),e.getErrorMessage());
+        return returnService.errorMessage(e.getErrorCode(), e.getErrorMessage());
     }
 }
