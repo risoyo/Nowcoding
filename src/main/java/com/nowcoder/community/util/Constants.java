@@ -21,4 +21,8 @@ public class Constants {
      * 默认头像URL
      */
     public static final String DEFAULT_AVATAR = "http://localhost:8081/community/img/header/default.png";
+    /**
+     * 存放敏感词的文件名
+     */
+    public static final String SENSITIVE_FILE = "sensitiveWords.txt";
 }
