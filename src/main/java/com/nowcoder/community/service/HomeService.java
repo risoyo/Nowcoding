@@ -1,11 +1,15 @@
 package com.nowcoder.community.service;
 
+import com.nowcoder.community.controller.RegisterController;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.ReturnMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +17,7 @@ import java.util.Map;
 
 @Service
 public class HomeService {
+    private static final Logger logger = LoggerFactory.getLogger(HomeService.class);
     private final DiscussPostService discussPostService;
     private final UserService userService;
     private final ReturnService returnService;
@@ -35,6 +40,7 @@ public class HomeService {
     public ReturnMessage<?> getIndexPosts(int currentPageNumber, int maxRowsPerPage) {
         String totalPageNumber;//前台页面显示的总页数
         int offSet;//前台页面显示的起始行
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Page page = new Page();
         page.setCurrentPageNumber(currentPageNumber);//将前台url传入的currentPageNumber传入page
@@ -59,10 +65,11 @@ public class HomeService {
             indexPost.put("content", discussPost.getContent());
             indexPost.put("type", discussPost.getType());
             indexPost.put("status", discussPost.getStatus());
-            indexPost.put("create_time", discussPost.getCreateTime());
+            indexPost.put("create_time", sdf.format(discussPost.getCreateTime()));
             indexPost.put("comment_count", discussPost.getCommentCount());
             indexPost.put("score", discussPost.getScore());
             indexPostList.add(indexPost);
+            logger.debug("时间是 " + sdf.format(discussPost.getCreateTime()) );
         }
         return returnService.successWithObjectAndMessage(totalPageNumber, indexPostList);
     }
