@@ -57,7 +57,7 @@ public enum NowcodingErrCode {
      * 头像上传失败
      */
     UPLOAD_FAIL("400401", "头像上传失败"),
-    SUCCESS("111", "222");
+    SUCCESS("000000", "成功");
 
 
     String respCode;
