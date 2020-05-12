@@ -8,7 +8,7 @@ public class ReturnService {
 
     /**
      * 无异常 请求成功并无具体内容返回
-     *
+     *  废弃
      * @return 返回message
      */
     public ReturnMessage<Object> success() {
