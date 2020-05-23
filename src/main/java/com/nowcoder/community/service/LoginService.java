@@ -4,7 +4,9 @@ import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.LoginResponse;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.util.BizException;
 import com.nowcoder.community.util.JWTUtils;
+import com.nowcoder.community.util.NowcodingErrCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,18 +37,15 @@ public class LoginService {
         Map<String, String> message = new HashMap<>();
         System.out.println(userInfo);
         if (userInfo == null) {//若userInfo为空，则用户不存在
-//            throw new BizException(NowcodingErrCode.USER_NEXIST.respCode(), NowcodingErrCode.USER_NEXIST.respMessage());
+            throw new BizException(NowcodingErrCode.USER_NEXIST.respCode(), NowcodingErrCode.USER_NEXIST.respMessage());
         }
         if (userInfo.getPassword().equals(password)) {//密码正确，返回成功
             String token = jwtUtils.generateToken(userName, password); // 使用jwtUtils生成随机字符串作为token
 //            redisService.set(token,userName); //将token存入redis
             response.setToken(token);
             response.setHeaderUrl(userInfo.getHeaderUrl());
-//            message.put("token", token);
-//            message.put("headerURL", userInfo.getHeaderUrl());
-//            returnMap = returnService.successWithObjectAndMessage(NowcodingErrCode.SUCCESS.respCode(), message);
         } else {
-//            throw new BizException(NowcodingErrCode.PASS_ERROR.respCode(), NowcodingErrCode.PASS_ERROR.respMessage());
+            throw new BizException(NowcodingErrCode.PASS_ERROR.respCode(), NowcodingErrCode.PASS_ERROR.respMessage());
         }
         return response;
 

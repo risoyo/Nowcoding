@@ -51,6 +51,16 @@ public class returnMessage<T> {
         return new returnMessage<T>(NowcodingErrCode.SUCCESS.respCode(), message, data);
     }
 
+    /**
+     * 失败的返回结果
+     * @param code 失败的错误码
+     * @param message 失败的错误信息
+     * respCode与respMessage为默认响应
+     */
+    public static returnMessage<Object> fail(String code,String message) {
+        return new returnMessage<>(code,message, null);
+    }
+
 
     public String getRespCode() {
         return respCode;
