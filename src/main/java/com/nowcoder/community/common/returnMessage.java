@@ -26,7 +26,6 @@ public class returnMessage<T> {
      * respCode与respMessage为默认响应
      */
     public static returnMessage<Object> success() {
-        System.out.println("now im here");
         return new returnMessage<>(NowcodingErrCode.SUCCESS.respCode(), NowcodingErrCode.SUCCESS.respMessage(), null);
     }
 

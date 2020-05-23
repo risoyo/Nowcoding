@@ -7,10 +7,10 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class LoginDTO {
+public class LoginResponse {
     @NotBlank
-    private String name;
+    private String headerUrl;
 
     @NotBlank
-    private String pass;
+    private String token;
 }

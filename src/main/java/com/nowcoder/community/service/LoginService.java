@@ -1,6 +1,7 @@
 package com.nowcoder.community.service;
 
 import com.nowcoder.community.dao.UserMapper;
+import com.nowcoder.community.entity.LoginResponse;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.util.JWTUtils;
@@ -27,8 +28,9 @@ public class LoginService {
     }
 
 
-    public Map<String, String> loginVerifyUser(String userName, String password) {
+    public LoginResponse loginVerifyUser(String userName, String password) {
         User userInfo = userMapper.selectByName(userName);
+        LoginResponse response  = new LoginResponse();
         ReturnMessage<?> returnMap;//定义变量returnMap，用于接收返回结构体
         Map<String, String> message = new HashMap<>();
         System.out.println(userInfo);
@@ -38,14 +40,15 @@ public class LoginService {
         if (userInfo.getPassword().equals(password)) {//密码正确，返回成功
             String token = jwtUtils.generateToken(userName, password); // 使用jwtUtils生成随机字符串作为token
 //            redisService.set(token,userName); //将token存入redis
-
-            message.put("token", token);
-            message.put("headerURL", userInfo.getHeaderUrl());
+            response.setToken(token);
+            response.setHeaderUrl(userInfo.getHeaderUrl());
+//            message.put("token", token);
+//            message.put("headerURL", userInfo.getHeaderUrl());
 //            returnMap = returnService.successWithObjectAndMessage(NowcodingErrCode.SUCCESS.respCode(), message);
         } else {
 //            throw new BizException(NowcodingErrCode.PASS_ERROR.respCode(), NowcodingErrCode.PASS_ERROR.respMessage());
         }
-        return message;
+        return response;
 
     }
 
