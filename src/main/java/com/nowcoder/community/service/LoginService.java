@@ -2,7 +2,6 @@ package com.nowcoder.community.service;
 
 import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.LoginResponse;
-import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.util.BizException;
 import com.nowcoder.community.util.JWTUtils;
@@ -10,21 +9,17 @@ import com.nowcoder.community.util.NowcodingErrCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 @Service
 public class LoginService {
     private final UserMapper userMapper;
-    private final ReturnService returnService;
     private final RedisService redisService;
     private final JWTUtils jwtUtils;
 
     @Autowired
-    private LoginService(UserMapper userMapper, ReturnService returnService, RedisService redisService, JWTUtils jwtUtils) {
+    private LoginService(UserMapper userMapper, RedisService redisService, JWTUtils jwtUtils) {
         this.userMapper = userMapper;
-        this.returnService = returnService;
         this.redisService = redisService;
         this.jwtUtils = jwtUtils;
     }
@@ -33,9 +28,6 @@ public class LoginService {
     public LoginResponse loginVerifyUser(String userName, String password) {
         User userInfo = userMapper.selectByName(userName);
         LoginResponse response  = new LoginResponse();
-        ReturnMessage<?> returnMap;//定义变量returnMap，用于接收返回结构体
-        Map<String, String> message = new HashMap<>();
-        System.out.println(userInfo);
         if (userInfo == null) {//若userInfo为空，则用户不存在
             throw new BizException(NowcodingErrCode.USER_NEXIST.respCode(), NowcodingErrCode.USER_NEXIST.respMessage());
         }

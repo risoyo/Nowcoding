@@ -24,30 +24,15 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-//    @RequestMapping(path = "/Login")//定义请求url
-//    @ResponseBody//定义返回类型为自定义类型
-//    @PassToken
-//    public ReturnMessage<?> generateVerifyCodeAndSend(@RequestBody Map<String, Object> loginJson, HttpServletRequest request) {
-//        // TODO 添加生成Token并返回前台，添加拦截器，在前台访问url时拦截进行token校验，校验通过则放行，校验不通过强制返回
-//        ReturnMessage<?> returnMap;//定义变量returnMap，用于接收返回结构体
-//        String name = (String) loginJson.get("name");
-//        String pass = (String) loginJson.get("pass");
-//        returnMap = loginService.loginVerifyUser(name, pass);
-//        return returnMap;
-//    }
-
     @RequestMapping(path = "/login")//定义请求url
     @ResponseBody//定义返回类型为自定义类型
     @PassToken
     public returnMessage userLogin(@Validated @RequestBody LoginRequest loginData, HttpServletRequest request) {
         // TODO 添加生成Token并返回前台，添加拦截器，在前台访问url时拦截进行token校验，校验通过则放行，校验不通过强制返回
-//        ReturnMessage<?> returnMap;//定义变量returnMap，用于接收返回结构体
         String name = loginData.getName();
         String pass = loginData.getPass();
         System.out.println("name is " + name + "; pass is " + pass);
         LoginResponse response =  loginService.loginVerifyUser(name, pass);
-//        Map<String, String> tokenMap = new HashMap<>();
-//        tokenMap = loginService.loginVerifyUser(name, pass);
         return returnMessage.success(response);
     }
 
