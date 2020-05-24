@@ -11,22 +11,18 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class HomeService {
     private static final Logger logger = LoggerFactory.getLogger(HomeService.class);
     private final DiscussPostService discussPostService;
     private final UserService userService;
-    private final ReturnService returnService;
 
     @Autowired
-    public HomeService(DiscussPostService discussPostService, UserService userService, ReturnService returnService) {
+    public HomeService(DiscussPostService discussPostService, UserService userService) {
         this.discussPostService = discussPostService;
         this.userService = userService;
-        this.returnService = returnService;
     }
 
 
@@ -51,25 +47,13 @@ public class HomeService {
         offSet = page.getOffSet();//从page获取此页开始行数
 
 
-        List<Map<String, Object>> indexPostList = new ArrayList<>();//返回的列表集合
         List<DiscussPost> discussPosts = discussPostService.findDiscussPosts(0, offSet, maxRowsPerPage);
         List<IndexPostResponse> postList = new ArrayList<>();
+        IndexPostResponse response = new IndexPostResponse();
 
 //        将查询出的本页帖子数据存入List中
         for (DiscussPost discussPost : discussPosts) {
-            Map<String, Object> indexPost = new HashMap<>();//列表集合中的数据项
             String userName = userService.findUserById(discussPost.getUserId()).getUsername();
-            indexPost.put("id", discussPost.getId());
-            indexPost.put("user_id", discussPost.getUserId());
-            indexPost.put("user_name", userName);
-            indexPost.put("title", discussPost.getTitle());
-            indexPost.put("content", discussPost.getContent());
-            indexPost.put("type", discussPost.getType());
-            indexPost.put("status", discussPost.getStatus());
-            indexPost.put("create_time", sdf.format(discussPost.getCreateTime()));
-            indexPost.put("comment_count", discussPost.getCommentCount());
-            indexPost.put("score", discussPost.getScore());
-            IndexPostResponse response = new IndexPostResponse();
             response.setId(discussPost.getId());
             response.setUser_id(discussPost.getUserId());
             response.setUser_name(userName);
@@ -81,10 +65,9 @@ public class HomeService {
             response.setComment_count(discussPost.getCommentCount());
             response.setScore(discussPost.getScore());
             postList.add(response);
-            indexPostList.add(indexPost);
             logger.debug("时间是 " + sdf.format(discussPost.getCreateTime()) );
         }
-//        return returnService.successWithObjectAndMessage(totalPageNumber, indexPostList);
+        // TODO: 更改前端对应的字段，之前是message，现在是respInfo
         return returnMessage.success(postList,totalPageNumber);
     }
 }
