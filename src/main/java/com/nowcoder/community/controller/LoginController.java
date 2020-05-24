@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    @RequestMapping(path = "/login")//定义请求url
+    @RequestMapping(path = "/login",method = RequestMethod.POST)//定义请求url
     @ResponseBody//定义返回类型为自定义类型
     @PassToken
     public returnMessage userLogin(@Validated @RequestBody LoginRequest loginData, HttpServletRequest request) {

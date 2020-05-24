@@ -1,9 +1,9 @@
 package com.nowcoder.community.service;
 
-import com.nowcoder.community.controller.RegisterController;
+import com.nowcoder.community.common.returnMessage;
 import com.nowcoder.community.entity.DiscussPost;
+import com.nowcoder.community.entity.IndexPostResponse;
 import com.nowcoder.community.entity.Page;
-import com.nowcoder.community.entity.ReturnMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class HomeService {
      * @param maxRowsPerPage    每页最大行数
      * @return 返回json数据，message节点为总页数，String；data节点为帖子内容，ListMap
      */
-    public ReturnMessage<?> getIndexPosts(int currentPageNumber, int maxRowsPerPage) {
+    public returnMessage<List<IndexPostResponse>> getIndexPosts(int currentPageNumber, int maxRowsPerPage) {
         String totalPageNumber;//前台页面显示的总页数
         int offSet;//前台页面显示的起始行
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -53,6 +53,7 @@ public class HomeService {
 
         List<Map<String, Object>> indexPostList = new ArrayList<>();//返回的列表集合
         List<DiscussPost> discussPosts = discussPostService.findDiscussPosts(0, offSet, maxRowsPerPage);
+        List<IndexPostResponse> postList = new ArrayList<>();
 
 //        将查询出的本页帖子数据存入List中
         for (DiscussPost discussPost : discussPosts) {
@@ -68,9 +69,22 @@ public class HomeService {
             indexPost.put("create_time", sdf.format(discussPost.getCreateTime()));
             indexPost.put("comment_count", discussPost.getCommentCount());
             indexPost.put("score", discussPost.getScore());
+            IndexPostResponse response = new IndexPostResponse();
+            response.setId(discussPost.getId());
+            response.setUser_id(discussPost.getUserId());
+            response.setUser_name(userName);
+            response.setTitle(discussPost.getTitle());
+            response.setContent(discussPost.getContent());
+            response.setType(discussPost.getType());
+            response.setStatus(discussPost.getStatus());
+            response.setCreate_time(discussPost.getCreateTime());
+            response.setComment_count(discussPost.getCommentCount());
+            response.setScore(discussPost.getScore());
+            postList.add(response);
             indexPostList.add(indexPost);
             logger.debug("时间是 " + sdf.format(discussPost.getCreateTime()) );
         }
-        return returnService.successWithObjectAndMessage(totalPageNumber, indexPostList);
+//        return returnService.successWithObjectAndMessage(totalPageNumber, indexPostList);
+        return returnMessage.success(postList,totalPageNumber);
     }
 }
