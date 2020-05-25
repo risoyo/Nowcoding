@@ -26,19 +26,18 @@ public class MailClient {
     }
 
     //    传入三个变量，收件人、标题、内容
-    public int sendMail(String to, String subject, String content) {
+    public void sendMail(String to, String subject, String content) {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
         try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message);
             helper.setFrom(from);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(content, true);
             mailSender.send(helper.getMimeMessage());
-            return 0;
-        } catch (MessagingException e) {
+          } catch (MessagingException e) {
             logger.error("发送邮件失败:" + e.getMessage());
-            return 1;
+            throw new BizException(NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respCode(),NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respMessage());
         }
     }
 

@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -51,19 +48,19 @@ public class HomeController {
         return homeService.getIndexPosts(currentPageNumber, maxRowsPerPage);
     }
 
-    @RequestMapping(path = "/jsonReturn")//定义请求url
-    @ResponseBody//定义返回类型为自定义类型
-    @PassToken
-    public String jsonReturn() {
-        Map<String, Object> message = new HashMap<>();
-        message.put("message1", 1111);
-        message.put("message2", 2222);
-
-        List<Map<String, Object>> indexPostList = new ArrayList<>();//返回的列表集合
-        indexPostList.add(message);
-        message.put("message3", 3333);
-        message.put("message4", 4444);
-        indexPostList.add(message);
-        return jsonUtils.getJSONString(111, "success", indexPostList);
-    }
+//    @RequestMapping(path = "/jsonReturn")//定义请求url
+//    @ResponseBody//定义返回类型为自定义类型
+//    @PassToken
+//    public String jsonReturn() {
+//        Map<String, Object> message = new HashMap<>();
+//        message.put("message1", 1111);
+//        message.put("message2", 2222);
+//
+//        List<Map<String, Object>> indexPostList = new ArrayList<>();//返回的列表集合
+//        indexPostList.add(message);
+//        message.put("message3", 3333);
+//        message.put("message4", 4444);
+//        indexPostList.add(message);
+//        return jsonUtils.getJSONString(111, "success", indexPostList);
+//    }
 }

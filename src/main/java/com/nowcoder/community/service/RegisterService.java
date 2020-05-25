@@ -1,5 +1,6 @@
 package com.nowcoder.community.service;
 
+import com.nowcoder.community.common.returnMessage;
 import com.nowcoder.community.dao.TbRegisterMessageMapper;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.entity.TbRegisterMessage;
@@ -29,7 +30,7 @@ public class RegisterService {
     }
 
     //    生成验证码并存入数据库
-    public ReturnMessage<?> generateVerifyCode(String email) {
+    public returnMessage generateVerifyCode(String email) {
         TbRegisterMessage tbRegisterMessage = new TbRegisterMessage();//初始化实体类结构体
         int verifyCode;//声明验证码
         int emailStatus;//声明邮箱状态变量，若以此邮箱查询到status状态为1的邮箱，则代表已发送邮件
@@ -46,11 +47,12 @@ public class RegisterService {
         tbRegisterMessage.setCreateTime(new Date());
         int affectRow = tbRegisterMessageMapper.insertRegisterMessage(tbRegisterMessage);//定义affectRow用于接收变动行数
         if (affectRow == 1) {//若变动行数为1，则已正常插入
-            returnMap = returnService.success();
+//            returnMap = returnService.success();
+            return returnMessage.success();
         } else {//若变动行数非1，则插入异常
             throw new BizException(NowcodingErrCode.VERIFY_CODE_GEN_FAIL.respCode(), NowcodingErrCode.VERIFY_CODE_GEN_FAIL.respMessage());
         }
-        return returnMap;
+//        return returnMap;
 
     }
 
@@ -60,24 +62,32 @@ public class RegisterService {
     }
 
     // 生成验证码并发送
-    public ReturnMessage<?> generateVerifyCodeAndSend(String email) {
-        returnMap = generateVerifyCode(email);
-        if (!returnMap.getRespCode().equals("000000")) {//调用发送验证码方法，若响应码非000000，则调用失败
-            return returnMap;
+    public returnMessage generateVerifyCodeAndSend(String email) {
+        returnMessage response = generateVerifyCode(email);
+        if (!response.getRespCode().equals("000000")) {//调用发送验证码方法，若响应码非000000，则调用失败
+            return returnMessage.fail(NowcodingErrCode.VERIFY_CODE_GEN_FAIL.respCode(),NowcodingErrCode.VERIFY_CODE_GEN_FAIL.respMessage());
         }
         int sendStatus;//定义t变量sendStatus，0-成功发送，1-发送失败
         TbRegisterMessage tbRegisterMessage = getVerifyCode(email);
         String verifyMessage = tbRegisterMessage.getVerifyMessage();//定义verifyMessage存储验证信息
         int verifyCode = tbRegisterMessage.getVerifyCode();//定义verifyCode存储验证码
-        sendStatus = mailClient.sendMail(email, verifyMessage, verifyMessage);
-        if (sendStatus == 0) {//发送邮件成功
-            returnMap = returnService.success();
+//        sendStatus = mailClient.sendMail(email, verifyMessage, verifyMessage);
+//        if (sendStatus == 0) {//发送邮件成功
+//            returnMap = returnService.success();
+//            tbRegisterMessageMapper.updateRegisterMessageStatus(email, verifyCode, 1);//发送成功时将发送信息置为1
+//        } else {
+//            throw new BizException(NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respCode(), NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respMessage());
+//        }
+        try {
+            mailClient.sendMail(email, verifyMessage, verifyMessage);
             tbRegisterMessageMapper.updateRegisterMessageStatus(email, verifyCode, 1);//发送成功时将发送信息置为1
-        } else {
+            return returnMessage.success();
+        }catch (BizException e){
             throw new BizException(NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respCode(), NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respMessage());
         }
 
-        return returnMap;
+
+//        return returnMap;
     }
 
     // 验证验证码正确后注册用户

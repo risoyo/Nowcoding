@@ -1,6 +1,8 @@
 package com.nowcoder.community.controller;
 
 import com.nowcoder.community.annotation.PassToken;
+import com.nowcoder.community.common.returnMessage;
+import com.nowcoder.community.entity.GetVerifyCodeRequest;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.service.RegisterService;
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,13 +29,12 @@ public class RegisterController {
         this.registerService = registerService;
     }
 
-    @RequestMapping(path = "/getVerifyCode")//定义请求url
+    @RequestMapping(path = "/getVerifyCode",method = RequestMethod.POST)//定义请求url
     @ResponseBody//定义返回类型为自定义类型
     @PassToken
-    public ReturnMessage<?> generateVerifyCodeAndSend(@RequestBody Map<String, Object> emailJson, HttpServletRequest request) {
-        String email = (String) emailJson.get("email");
-        returnMap = registerService.generateVerifyCodeAndSend(email);
-        return returnMap;
+    public returnMessage generateVerifyCodeAndSend(@RequestBody GetVerifyCodeRequest verifyCodRequest, HttpServletRequest request) {
+        String email =verifyCodRequest.getEmail();
+        return registerService.generateVerifyCodeAndSend(email);
     }
 
     @RequestMapping(path = "/userRegist")
