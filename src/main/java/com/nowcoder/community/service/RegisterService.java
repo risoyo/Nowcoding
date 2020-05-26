@@ -68,17 +68,9 @@ public class RegisterService {
         if (!response.getRespCode().equals("000000")) {//调用发送验证码方法，若响应码非000000，则调用失败
             return returnMessage.fail(NowcodingErrCode.VERIFY_CODE_GEN_FAIL.respCode(),NowcodingErrCode.VERIFY_CODE_GEN_FAIL.respMessage());
         }
-        int sendStatus;//定义t变量sendStatus，0-成功发送，1-发送失败
         TbRegisterMessage tbRegisterMessage = getVerifyCode(email);
         String verifyMessage = tbRegisterMessage.getVerifyMessage();//定义verifyMessage存储验证信息
         int verifyCode = tbRegisterMessage.getVerifyCode();//定义verifyCode存储验证码
-//        sendStatus = mailClient.sendMail(email, verifyMessage, verifyMessage);
-//        if (sendStatus == 0) {//发送邮件成功
-//            returnMap = returnService.success();
-//            tbRegisterMessageMapper.updateRegisterMessageStatus(email, verifyCode, 1);//发送成功时将发送信息置为1
-//        } else {
-//            throw new BizException(NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respCode(), NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respMessage());
-//        }
         try {
             mailClient.sendMail(email, verifyMessage, verifyMessage);
             tbRegisterMessageMapper.updateRegisterMessageStatus(email, verifyCode, 1);//发送成功时将发送信息置为1
@@ -87,8 +79,6 @@ public class RegisterService {
             throw new BizException(NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respCode(), NowcodingErrCode.VERIFY_CODE_SEND_FAIL.respMessage());
         }
 
-
-//        return returnMap;
     }
 
     // 验证验证码正确后注册用户
