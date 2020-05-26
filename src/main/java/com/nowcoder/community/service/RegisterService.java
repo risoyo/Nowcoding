@@ -4,6 +4,7 @@ import com.nowcoder.community.common.returnMessage;
 import com.nowcoder.community.dao.TbRegisterMessageMapper;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.entity.TbRegisterMessage;
+import com.nowcoder.community.entity.UserRegistRequest;
 import com.nowcoder.community.util.BizException;
 import com.nowcoder.community.util.MailClient;
 import com.nowcoder.community.util.NowcodingErrCode;
@@ -91,10 +92,14 @@ public class RegisterService {
     }
 
     // 验证验证码正确后注册用户
-    public ReturnMessage<?> userRegister(String userName, String password, String email, int verifyCode) {
+    public returnMessage userRegister(UserRegistRequest userInfo) {
+        String userName = userInfo.getName();
+        String password = userInfo.getPass();
+        String email = userInfo.getEmail();
+        int verifyCode = userInfo.getVerifyCode();
+
         TbRegisterMessage tbRegisterMessage = getVerifyCode(email);
         int status;//定义status，接收insertUser()返回的影响行数
-        int generateStatus;//定义变量generateStatus，0-成功生成，1-生成失败
         if (tbRegisterMessage.getUsable() == 1) {//若验证码使用状态为1，则该验证码已使用，不能再注册
             throw new BizException(NowcodingErrCode.REGISTER_FAIL.respCode(), NowcodingErrCode.REGISTER_FAIL.respMessage());
         }
@@ -103,14 +108,13 @@ public class RegisterService {
             status = userService.insertUser(userName, password, email);
             if (status == 1) {//若status为1，则用户注册成功
                 tbRegisterMessageMapper.updateRegisterMessageUsable(email, verifyCode, 1);//插入成功时将使用信息置为1
-                returnMap = returnService.success();
+                return returnMessage.success();
             } else {//status非1，则注册失败
                 throw new BizException(NowcodingErrCode.REGISTER_FAIL.respCode(), NowcodingErrCode.REGISTER_FAIL.respMessage());
             }
         } else {
             throw new BizException(NowcodingErrCode.VERIFY_CODE_ERROR.respCode(), NowcodingErrCode.VERIFY_CODE_ERROR.respMessage());
         }
-        return returnMap;
     }
 
 }

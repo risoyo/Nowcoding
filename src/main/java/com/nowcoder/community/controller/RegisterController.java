@@ -4,6 +4,7 @@ import com.nowcoder.community.annotation.PassToken;
 import com.nowcoder.community.common.returnMessage;
 import com.nowcoder.community.entity.GetVerifyCodeRequest;
 import com.nowcoder.community.entity.ReturnMessage;
+import com.nowcoder.community.entity.UserRegistRequest;
 import com.nowcoder.community.service.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 @Controller
 public class RegisterController {
@@ -40,14 +40,9 @@ public class RegisterController {
     @RequestMapping(path = "/userRegist")
     @ResponseBody
     @PassToken
-    public ReturnMessage<?> registUser(@RequestBody Map<String, Object> userInfo, HttpServletRequest request) {
+    public returnMessage registUser(@RequestBody UserRegistRequest userInfo, HttpServletRequest request) {
 
-        String userName = (String) userInfo.get("name");
-        String password = (String) userInfo.get("pass");
-        String email = (String) userInfo.get("email");
-        int verifyCode = (int) userInfo.get("verifyCode");
-        returnMap = registerService.userRegister(userName, password, email, verifyCode);
-        return returnMap;
+        return registerService.userRegister(userInfo);
     }
 
 }
