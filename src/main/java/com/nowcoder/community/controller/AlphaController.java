@@ -4,6 +4,7 @@ import com.nowcoder.community.annotation.PassToken;
 import com.nowcoder.community.entity.ReturnMessage;
 import com.nowcoder.community.service.ReturnService;
 import com.nowcoder.community.util.JsonUtils;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/alpha")
+@Api(tags = {"测试接口"})
 public class AlphaController {
 
     @Autowired

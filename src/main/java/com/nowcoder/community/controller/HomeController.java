@@ -7,6 +7,8 @@ import com.nowcoder.community.service.HomeService;
 import com.nowcoder.community.service.ReturnService;
 import com.nowcoder.community.util.IpUtil;
 import com.nowcoder.community.util.JsonUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+@Api(tags = {"主页接口"})
 public class HomeController {
     private final HomeService homeService;
     private final JsonUtils jsonUtils;
@@ -34,6 +37,7 @@ public class HomeController {
 
 
     @RequestMapping(path = "/getIndexPost", method = RequestMethod.GET)
+    @ApiOperation(value = "获取首页帖子", notes = "", httpMethod = "GET")
     @ResponseBody
     @PassToken
     public returnMessage<List<IndexPostResponse>> getIndexPost(HttpServletRequest request,

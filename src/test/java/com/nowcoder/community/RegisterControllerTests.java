@@ -1,7 +1,6 @@
 package com.nowcoder.community;
 
 import com.nowcoder.community.service.RegisterService;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,8 +14,8 @@ public class RegisterControllerTests {
     @Autowired
     private RegisterService registerService;
 
-    @Test
-    public void userRegisterTest() {
-        registerService.userRegister("testuser", "12345", "risoyo@163.com", 711335);
-    }
+//    @Test
+//    public void userRegisterTest() {
+//        registerService.userRegister("testuser", "12345", "risoyo@163.com", 711335);
+//    }
 }
