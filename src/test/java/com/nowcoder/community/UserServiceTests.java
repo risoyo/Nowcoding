@@ -1,7 +1,7 @@
 package com.nowcoder.community;
 
-import com.nowcoder.community.service.LoginService;
 import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.impl.LoginServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class UserServiceTests {
     private UserService userService;
 
     @Autowired
-    private LoginService loginService;
+    private LoginServiceImpl loginServiceImpl;
 
     @Test
     public void testSelectUserByName() {
@@ -26,6 +26,6 @@ public class UserServiceTests {
 
     @Test
     public void testLoginVerifyUser() {
-        System.out.println(loginService.loginVerifyUser("testuser", "12345"));
+        System.out.println(loginServiceImpl.loginVerifyUser("testuser", "12345"));
     }
 }
