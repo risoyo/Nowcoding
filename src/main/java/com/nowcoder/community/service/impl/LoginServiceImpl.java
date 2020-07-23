@@ -34,7 +34,7 @@ public class LoginServiceImpl implements LoginService {
      * 登录的接口实现
      *
      * @param userName 用户名
-     * @param password 密码
+     * @param password 密码q
      * @return 登录的实体类
      */
     public LoginResponse loginVerifyUser(String userName, String password) {
