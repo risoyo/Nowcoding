@@ -49,16 +49,6 @@ public class RegisterTests {
         System.out.println(tbRegisterMessageMapper.selectTbRegisterMessage("risoyo@163.com"));
     }
 
-    @Test
-    public void testGenerateVerifyCode() {
-        System.out.println(registerService.generateVerifyCode("risoyo@163.com"));
-    }
-
-    @Test
-    public void testGetVerifyCode() {
-        TbRegisterMessage tbRegisterMessage = registerService.getVerifyCode("risoyo@163.com");
-        System.out.println(tbRegisterMessage);
-    }
 
     @Test
     public void testChangeStatusAndUsable() {

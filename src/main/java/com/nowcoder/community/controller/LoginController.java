@@ -37,7 +37,6 @@ public class LoginController {
         String name = loginData.getName();
         String pass = loginData.getPass();
         System.out.println("name is " + name + "; pass is " + pass);
-//        LoginResponse response = loginServiceImpl.loginVerifyUser(name, pass);
         LoginResponse response = loginService.loginVerifyUser(name, pass);
         return returnMessage.success(response);
     }

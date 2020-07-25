@@ -24,8 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 public class RegisterController {
     private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
-    private final RegisterService registerService;//注册相关Service
-    private ReturnMessage<?> returnMap;//定义变量returnMap，用于接收返回结构体
+    //注册相关Service
+    private final RegisterService registerService;
+    /**
+     * 定义变量returnMap，用于接收返回结构体
+     */
+    private ReturnMessage<?> returnMap;
 
     @Autowired
     public RegisterController(RegisterService registerService) {
