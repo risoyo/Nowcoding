@@ -37,6 +37,7 @@ public class LoginServiceImpl implements LoginService {
      * @param password 密码q
      * @return 登录的实体类
      */
+    @Override
     public LoginResponse loginVerifyUser(String userName, String password) {
         User userInfo = userMapper.selectByName(userName);
         LoginResponse response = new LoginResponse();
