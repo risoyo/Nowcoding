@@ -3,6 +3,10 @@ package com.nowcoder.community.service;
 import com.nowcoder.community.common.returnMessage;
 import com.nowcoder.community.entity.UserRegistRequest;
 
+/**
+ * 用户注册的接口类
+ * @author risoyo
+ */
 public interface RegisterService {
     /**
      * 生成验证码并发送

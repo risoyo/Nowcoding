@@ -4,6 +4,7 @@ import com.nowcoder.community.entity.LoginResponse;
 
 /**
  * 登录的接口类
+ * @author risoyo
  */
 public interface LoginService {
 
